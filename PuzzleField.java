@@ -536,8 +536,14 @@ public class PuzzleField extends RenderableEntity {
 		
 		ActiveBlock.clear();
 		ActiveBlock.add(block);
-		ActiveBlock.add(block2);
-		
+		ActiveBlock.add(block2); 
+	}
+	
+	public void setActiveBlockFallSpeedScale(float sc)
+	{
+		for(int i = 0; i < ActiveBlock.size(); i++){
+			ActiveBlock.get(i).setSpeedScale(sc);
+		}
 	}
 	public void DropActiveBlock()
 	{

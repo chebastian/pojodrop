@@ -10,12 +10,12 @@ class State
 		mGame = game;
 	}
 	
-	public void OnEnter(Game game)
+	public void OnEnter(GameView game)
 	{
 		
 	}
 	
-	public void OnExit(Game game)
+	public void OnExit(GameView game)
 	{
 		
 	}

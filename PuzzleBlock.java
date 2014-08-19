@@ -27,6 +27,7 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	public float Scale;
 	protected static int UniqueIdCounter = 0;
 	public static int FallSpeed = 100;
+	protected float mSpeedScale;
 
 	public int colors[] = {Color.GREEN,Color.BLUE,Color.RED,Color.GRAY, Color.WHITE};
 	static Random rand = new Random();
@@ -35,51 +36,30 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	public PuzzleBlock(Point index, int w, int h)
 	{
 		super(0,new Rect((int)index.x*w, (int)index.y*h, w, h) );
-		BlockType = 0;
-		CurrentState = new IdleState(this);
-		
-		Colour = colors[4];
-		Checked = false;
-		
-		BlockType = 4;
-		NextPositonY = -1;
-		num = 0;
-		UniqueId = UniqueIdCounter++;
-		Empty = true;
-		Scale = 1.0f;
-		StateChanged = false;
-		mNeedsToFade = false;
+		initialize();
 	}
 	
 	public PuzzleBlock(Point pos)
 	{
 		super(0,new Rect((int)pos.x, (int)pos.y, BLOCK_W, BLOCK_H) );
-		BlockType = 0;
-		CurrentState = new FallingState(this);
-		
-		int r = rand.nextInt(3);
-		Colour = colors[r];
-		Checked = false;
-		
-		BlockType = r;
-		NextPositonY = -1;
-		num = 0;
-		UniqueId = UniqueIdCounter++;
-		Empty = false;
-		Scale = 1.0f;
-		mNeedsToFade = false;
+		initialize();
 	}
 	
 	public PuzzleBlock(PuzzleBlock b)
 	{
 		super(0,b.rect);
+		initialize();
 	}
 	
 	public PuzzleBlock()
 	{
 		super(0,new Rect(0, 0, BLOCK_W, BLOCK_H) );
+		initialize();
+	}
+	
+	public void initialize()
+	{
 		BlockType = 0;
-		CurrentState = new FallingState(this);
 		
 		int r = rand.nextInt(3);
 		Colour = colors[r];
@@ -92,6 +72,8 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		Empty = false;
 		Scale = 1.0f;
 		mNeedsToFade = false;
+		mSpeedScale = 1.0f;
+		CurrentState = new FallingState(this);
 	}
 	
 	public void SnapToPosition(int x, int y)
@@ -202,6 +184,14 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	public int compareTo(PuzzleBlock another) {
 		// TODO Auto-generated method stub
 		return another.top() - top();
+	}
+	
+	public void setSpeedScale(float sc){
+		mSpeedScale = sc;
+	}
+	
+	public float getSpeedScale(){
+		return mSpeedScale;
 	}
 	
 }

@@ -113,9 +113,8 @@ class MainGameThread extends Thread {
 
 			elapsedTime = elapsed;
 			GameUpdate(elapsed);
-			mGame.updateWidth(1);
 			mState.Update(elapsed);
-			//repaint();
+			mGame.mShake.Update(elapsed);
 
 			try
 			{
@@ -150,21 +149,13 @@ class MainGameThread extends Thread {
 		seconds += time;
 		x += time * 25.0f;
 		totalTime += time;
-
-		//game.Update(time); 
 	}
 	public void GameDraw(Canvas g)
 	{ 
-		
-		
 		frame++;
 		
 		Paint p = new Paint();
-		p.setColor(Color.WHITE);
-		g.drawRect(new Rect(10,110,20,20),p);
-		
-		p.setColor(Color.BLACK);
-		g.drawRect(new Rect(0,0,g.getWidth(),g.getHeight()), p);
+		clearGameScreen(g, Color.BLACK);
 
 		if(totalTime >= 1.0f)
 		{
@@ -177,5 +168,12 @@ class MainGameThread extends Thread {
 		g.drawText("Combo: " + mGame.getScoreTracker().getComboCounter(),10,100,p);
 		g.drawText("fps "+fps, 100, 200, p);
 		mState.Render(g);
+	}
+	
+	public void clearGameScreen(Canvas g,int color)
+	{
+		Paint p = new Paint();
+		p.setColor(color);
+		g.drawRect(new Rect(0,0,g.getWidth(),g.getHeight()), p); 
 	}
 }

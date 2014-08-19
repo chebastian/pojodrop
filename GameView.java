@@ -21,12 +21,15 @@ public class GameView extends SurfaceView {
 	int mTextWidth; 
 	SurfaceHolder mHolder;
 	ScoreTracker mScoreTracker;
+	ScreenShake mShake;
 	
 	public GameView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		mThread = new MainGameThread(this);
 		mScoreTracker = new ScoreTracker();
+		mShake = new ScreenShake(this, 0.2f, 50.0f);
+		mShake.OnEnter(this);
 		
 		mHolder = getHolder();
 		mHolder.addCallback(new SurfaceHolder.Callback() {
@@ -95,16 +98,14 @@ public class GameView extends SurfaceView {
 	@Override
 	public void onDraw(Canvas canvas)
 	{
-		//PuzzleBlock.BLOCK_W = canvas.getWidth() / 6;
-		//PuzzleBlock.BLOCK_H = canvas.getHeight() / 14;
 		super.onDraw(canvas);
 		float sz  = getScaleValue(canvas);
 		float x = (float)Math.random();
 		//canvas.translate(10*x, 0);
+		mShake.Render(canvas);
 		canvas.scale(sz, sz);
 		Paint p = new Paint();
 		p.setColor(Color.WHITE);
-		canvas.drawRect(new Rect(10,10,20 + mTextWidth,20),p);
 		
 		canvas.drawText("Combo: " + mScoreTracker.getComboCounter(), 10, 10, p);
 		
@@ -117,11 +118,6 @@ public class GameView extends SurfaceView {
 		float f = (canvas.getWidth()*0.5f) / 6;
 		float sc =  f / 32;
 		return sc;
-	}
-	
-	public void updateWidth(int i)
-	{
-		mTextWidth += i;
 	}
 	
 	@Override

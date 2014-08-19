@@ -43,9 +43,9 @@ class Game
 	
 	public void ChangeState(State s)
 	{
-		mCurrentState.OnExit(this);
+		/*mCurrentState.OnExit(this);
 		mCurrentState = s;
-		s.OnEnter(this);
+		s.OnEnter(this);*/
 	}
 	
 	public void Update(float time)
