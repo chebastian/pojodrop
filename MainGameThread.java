@@ -14,6 +14,7 @@ class MainGameThread extends Thread {
 
 	public static final int WIN_WIDTH = 800;
 	public static final int WIN_HEIGHT = 600;
+	public static final float SESSION_PLAY_TIME = 240.0f;
 	long lastTime = 0;
 	float elapsedTime = 0.0f;
 
@@ -31,7 +32,7 @@ class MainGameThread extends Thread {
 
 	int frame = 0;
 	int fps = 0;
-	float totalTime;
+	float mTotalTime;
 	float mGameTime;
 	
 	GameState mState;
@@ -45,9 +46,6 @@ class MainGameThread extends Thread {
 		mState = new GameState(game);
 		mState.Field.initGame(game);
 		mGameTime = 240.0f;
-		
-		mGame.entityManager().addEntity(new BubbleText("HELLO", new Point(10,100) , new Point(10,200), 3.0f));
-		mGame.entityManager().addEntity(new BubbleText("HELLO", new Point(100,100) , new Point(10,0), 10.0f));
 		
 		mGame.setOnTouchListener(new SwipeListener(mGame.getContext()){
 			public void onSwipeLeft(){
@@ -74,10 +72,7 @@ class MainGameThread extends Thread {
 				if(mState.Field.canRotateActiveBlock())
 					mState.Field.RotateActiveBlock();
 			}
-		});
-		
-		/*mGame.setOnDragListener(new DragListener(){
-			
+
 			public void onDragRight(){
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
 					mState.Field.MoveActiveBlock(PuzzleBlock.BLOCK_W, 0); 
@@ -87,7 +82,7 @@ class MainGameThread extends Thread {
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0); 
 			}
-		});*/
+		}); 
 	}
 	
 	public void run()
@@ -167,9 +162,11 @@ class MainGameThread extends Thread {
 	{
 		seconds += time;
 		x += time * 25.0f;
-		totalTime += time;
+		mTotalTime += time;
 		mGame.entityManager().updateEntitys(time);
 		mGame.entityManager().cleanDeadEntitys(); 
+		mGameTime += time;
+		mGame.setTimeScale(mTotalTime / SESSION_PLAY_TIME );
 	}
 
 	public void GameDraw(Canvas g)
@@ -179,9 +176,9 @@ class MainGameThread extends Thread {
 		Paint p = new Paint();
 		clearGameScreen(g, Color.BLACK);
 
-		if(totalTime >= 1.0f)
+		if(mTotalTime >= 1.0f)
 		{
-			totalTime = 0.0f;
+			mTotalTime = 0.0f;
 			fps = frame;
 			frame = 0;
 		}

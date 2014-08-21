@@ -1,6 +1,7 @@
 package com.example.pojodrop;
 
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnDragListener;
 
@@ -23,7 +24,28 @@ public class DragListener implements OnDragListener {
 
 	@Override
 	public boolean onDrag(View v, DragEvent event) {
-		// TODO Auto-generated method stub
+		
+		int action = event.getAction();
+		boolean res = false;
+		
+		switch(action)
+		{ 
+                case DragEvent.ACTION_DRAG_STARTED:
+                {
+                	onDragging(event);
+                	res = true;
+                } 
+                case DragEvent.ACTION_DRAG_LOCATION:{
+                	onDragging(event);
+                	res = true;
+                }
+		} 
+		return res;
+		
+	}
+	
+	public void onDragging(DragEvent event){
+		
 		float lastX = mLastX;
 		float dx = event.getX() - lastX;
 		
@@ -36,7 +58,6 @@ public class DragListener implements OnDragListener {
 		
 		mLastX = event.getX();
 		
-		return false;
 	}
 
 }

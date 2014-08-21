@@ -18,33 +18,33 @@ import android.view.View.OnTouchListener;
 
 public class GameView extends SurfaceView {
 
-	
-	
-public static float flerp(float a, float b, float d){
+	public static float flerp(float a, float b, float d){
 		return a + ((b - a)*d);
 	} 
 
-public static Point plert(Point a, Point b, float d){
-	float newx = flerp(a.x, b.x, d);
-	float newy = flerp(a.y,b.y,d);
-	
-	Point p = new Point(0, 0);
-	p.x = (int)newx;
-	p.y = (int)newy;
-	return p;
-}
+	public static Point plert(Point a, Point b, float d){
+		float newx = flerp(a.x, b.x, d);
+		float newy = flerp(a.y,b.y,d);
+
+		Point p = new Point(0, 0);
+		p.x = (int)newx;
+		p.y = (int)newy;
+		return p;
+	}
 
 	MainGameThread mThread;
 	int mTextWidth; 
 	SurfaceHolder mHolder;
 	ScoreTracker mScoreTracker;
 	
+	float mTimeScale;
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
 	
 	public GameView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		mTimeScale = 1.0f;
 		mEntityManager = new EntityManager();
 		mThread = new MainGameThread(this);
 		mScoreTracker = new ScoreTracker(this);
@@ -162,5 +162,13 @@ public static Point plert(Point a, Point b, float d){
 	
 	public EntityManager entityManager(){
 		return mEntityManager;
+	}
+	
+	public float getTimeScale(){
+		return 1.0f;
+	}
+	
+	public void setTimeScale(float time){
+		mTimeScale = time;
 	}
 }
