@@ -102,6 +102,8 @@ public class PuzzleField extends RenderableEntity {
 	{
 		boolean updateFade = !hasBlockInState(DroppState.DroppStateID);
 		boolean hasACombo = false;
+		int blockCounter = 0;
+		Point blockPos = new Point();
 		for(int i = 0; i < BlockMap.size(); i++)
 		{
 			for(int j = 0; j < BlockMap.get(i).size(); j++)
@@ -111,13 +113,22 @@ public class PuzzleField extends RenderableEntity {
 				if(updateFade && bl.needsToFade() && !bl.IsInState(FadingState.FadingStateID))
 				{ 
 					bl.ChangeState(new FadingState(bl)); 
+					blockPos = new Point(bl.getX(),bl.getY());
 					hasACombo = true;
+					blockCounter++;
 				}
 			}
 		}
 		
 		if(hasACombo)
+		{
 			mGame.getScoreTracker().increaseComboCounter();
+			int score = mGame.getScoreTracker().increaseScore(blockCounter);
+			mGame.entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.0f));
+			mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
+			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f));
+			
+		}
 	}
 	
 	public boolean hasFadingBlocks()

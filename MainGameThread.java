@@ -1,10 +1,12 @@
 package com.example.pojodrop;
 
+import android.R.menu;
 import android.annotation.SuppressLint;
 import android.content.ReceiverCallNotAllowedException;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.SurfaceHolder;
 
@@ -29,7 +31,8 @@ class MainGameThread extends Thread {
 
 	int frame = 0;
 	int fps = 0;
-	float totalTime = 0.0f;
+	float totalTime;
+	float mGameTime;
 	
 	GameState mState;
 
@@ -41,7 +44,10 @@ class MainGameThread extends Thread {
 		mRunning = false;
 		mState = new GameState(game);
 		mState.Field.initGame(game);
+		mGameTime = 240.0f;
 		
+		mGame.entityManager().addEntity(new BubbleText("HELLO", new Point(10,100) , new Point(10,200), 3.0f));
+		mGame.entityManager().addEntity(new BubbleText("HELLO", new Point(100,100) , new Point(10,0), 10.0f));
 		
 		mGame.setOnTouchListener(new SwipeListener(mGame.getContext()){
 			public void onSwipeLeft(){
@@ -69,6 +75,19 @@ class MainGameThread extends Thread {
 					mState.Field.RotateActiveBlock();
 			}
 		});
+		
+		/*mGame.setOnDragListener(new DragListener(){
+			
+			public void onDragRight(){
+				if(mState.Field.CanMoveActiveBlockInDirection(1))
+					mState.Field.MoveActiveBlock(PuzzleBlock.BLOCK_W, 0); 
+			}
+			
+			public void onDragLeft(){
+				if(mState.Field.CanMoveActiveBlockInDirection(1))
+					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0); 
+			}
+		});*/
 	}
 	
 	public void run()
@@ -114,7 +133,7 @@ class MainGameThread extends Thread {
 			elapsedTime = elapsed;
 			GameUpdate(elapsed);
 			mState.Update(elapsed);
-			mGame.mShake.Update(elapsed);
+			mGame.mEffectMgr.updateEffects(elapsed);
 
 			try
 			{
@@ -149,7 +168,10 @@ class MainGameThread extends Thread {
 		seconds += time;
 		x += time * 25.0f;
 		totalTime += time;
+		mGame.entityManager().updateEntitys(time);
+		mGame.entityManager().cleanDeadEntitys(); 
 	}
+
 	public void GameDraw(Canvas g)
 	{ 
 		frame++;
@@ -166,8 +188,10 @@ class MainGameThread extends Thread {
 
 		p.setColor(Color.RED);
 		g.drawText("Combo: " + mGame.getScoreTracker().getComboCounter(),10,100,p);
-		g.drawText("fps "+fps, 100, 200, p);
+		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 10, 80, p);
+		//g.drawText("fps "+fps, 100, 200, p);
 		mState.Render(g);
+		mGame.entityManager().renderEntitys(g);
 	}
 	
 	public void clearGameScreen(Canvas g,int color)

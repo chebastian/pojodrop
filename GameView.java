@@ -5,7 +5,9 @@ import android.view.GestureDetector;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -17,20 +19,36 @@ import android.view.View.OnTouchListener;
 public class GameView extends SurfaceView {
 
 	
+	
+public static float flerp(float a, float b, float d){
+		return a + ((b - a)*d);
+	} 
+
+public static Point plert(Point a, Point b, float d){
+	float newx = flerp(a.x, b.x, d);
+	float newy = flerp(a.y,b.y,d);
+	
+	Point p = new Point(0, 0);
+	p.x = (int)newx;
+	p.y = (int)newy;
+	return p;
+}
+
 	MainGameThread mThread;
 	int mTextWidth; 
 	SurfaceHolder mHolder;
 	ScoreTracker mScoreTracker;
-	ScreenShake mShake;
+	
+	EffectManager mEffectMgr;
+	EntityManager mEntityManager;
 	
 	public GameView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		mEntityManager = new EntityManager();
 		mThread = new MainGameThread(this);
-		mScoreTracker = new ScoreTracker();
-		mShake = new ScreenShake(this, 0.2f, 50.0f);
-		mShake.OnEnter(this);
-		
+		mScoreTracker = new ScoreTracker(this);
+		mEffectMgr = new EffectManager(this); 
 		mHolder = getHolder();
 		mHolder.addCallback(new SurfaceHolder.Callback() {
 
@@ -102,7 +120,9 @@ public class GameView extends SurfaceView {
 		float sz  = getScaleValue(canvas);
 		float x = (float)Math.random();
 		//canvas.translate(10*x, 0);
-		mShake.Render(canvas);
+		
+		mEffectMgr.renderEffects(canvas);
+		//canvas.skew(0.2f, 0.5f);
 		canvas.scale(sz, sz);
 		Paint p = new Paint();
 		p.setColor(Color.WHITE);
@@ -130,9 +150,17 @@ public class GameView extends SurfaceView {
 			
 		}
 		return super.onTouchEvent(event);
-	} 
+	}
+	public EffectManager getEffectMgr()
+	{
+		return mEffectMgr;
+	}
 	
 	public ScoreTracker getScoreTracker(){
 		return mScoreTracker;
+	}
+	
+	public EntityManager entityManager(){
+		return mEntityManager;
 	}
 }

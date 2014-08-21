@@ -1,7 +1,10 @@
 package com.example.pojodrop;
 
+import java.security.spec.MGF1ParameterSpec;
+
 import android.content.Context;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -42,6 +45,14 @@ public class SwipeListener implements OnTouchListener{
 		
 	}
 	
+	public void onDragLeft(){
+		
+	}
+	
+	public void onDragRight(){
+		
+	}
+	
 	public boolean onTouch(View v,MotionEvent evt){
 		return mDetector.onTouchEvent(evt);
 	}
@@ -53,17 +64,9 @@ public class SwipeListener implements OnTouchListener{
 		private static final int SWIPE_VELOCITY_TRESHOLD = 50;
 		
 		float mLastXValue;
-		@Override
-		public boolean onDown(MotionEvent evt){
-			float last = mLastXValue;
-			
-			mLastXValue = evt.getX();
-			return true;
-		}
 		
-		public boolean onUp(MotionEvent evt)
-		{
-			mLastXValue = 0;
+		
+		public boolean onDown(MotionEvent evt){
 			return true;
 		}
 		
@@ -109,6 +112,5 @@ public class SwipeListener implements OnTouchListener{
 			return res;
 		}
 		
-	}
-
+	} 
 }

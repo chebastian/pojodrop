@@ -1,15 +1,19 @@
 package com.example.pojodrop;
 
+import android.graphics.Point;
+
 
 public class ScoreTracker {
 
 	int mScore;
 	int mComboCounter;
+	GameView mGame;
 	
-	public ScoreTracker()
+	public ScoreTracker(GameView game)
 	{
 		mScore = 0;
 		mComboCounter = 0;
+		mGame = game;
 	}
 
 	
@@ -22,15 +26,15 @@ public class ScoreTracker {
 	{
 		mComboCounter = 0;
 	}
-	
-	public int getComboCounter()
-	{
-		return mComboCounter;
-	}
 
-	public void increaseScore(int amount)
+	public int increaseScore(int amount)
 	{
-		mScore += amount;
+	   	mScore += amount * mComboCounter;
+	   	return amount * mComboCounter;
+	}
+	
+	public int getComboCounter(){
+		return mComboCounter;
 	}
 	
 	public void increaseScore(int clusterSize, int chain)

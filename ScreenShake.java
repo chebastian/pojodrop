@@ -17,6 +17,8 @@ public class ScreenShake extends ScreenEffect {
 	float mNextTarget;
 	int mCurrentIndex;
 	float mCurrentX;
+	float mTotalTime;
+	float mTimeBetweenShakes;
 	
 	public ScreenShake(GameView game,float duration, float intensity) {
 		super(game);
@@ -26,14 +28,12 @@ public class ScreenShake extends ScreenEffect {
 		mNextTarget = 0.0f;
 		mCurrentIndex = 0;
 		mCurrentX = 0.0f;
+		mTotalTime = 0.0f;
+		mTimeBetweenShakes = 0.2f;
 	}
-	
-	public float flerp(float a, float b, float d){
-		return a + ((b - a)*d);
-	} 
 
 	public void OnEnter(GameView game){
-		mPoints = new float[10];
+		mPoints = new float[8];
 		for(int i = 0; i < mPoints.length; i++)
 		{
 			mPoints[i] = ((float) Math.random()  * mIntensity); 
@@ -45,31 +45,38 @@ public class ScreenShake extends ScreenEffect {
 	}
 	
 	public float getElapsedTime(){
-		return mElapsedTime / mDuration;
+		return mElapsedTime / mTimeBetweenShakes;
 	}
 	
 	public float getNextTarget()
 	{
 		float c = mPoints[mCurrentIndex];
 		float startX = 0;
-		mCurrentX = flerp(startX,c,getElapsedTime());
+		mCurrentX = GameView.flerp(startX,c,getElapsedTime());
 		return mCurrentX;
 	}
 	
 	public void Update(float time){
 		mElapsedTime += time;
+		mTotalTime += time;
 		
-		if(mElapsedTime >= mDuration)
+		if(mElapsedTime >= mTimeBetweenShakes)
 		{
 			mElapsedTime = 0.0f; 
 			mCurrentIndex += 1;
 			if(mCurrentIndex >= mPoints.length)
 				mCurrentIndex = 0;
 		}
+		
+		if(mTotalTime >= mDuration)
+			mIsDone = true;
 	} 
 
 	public void Render(Canvas g)
 	{
-		g.translate(getNextTarget(), 0);
+		//g.translate(getNextTarget(), 0);
+		//g.scale(getNextTarget(), getNextTarget());
+		g.skew(getNextTarget(), getNextTarget());
+		
 	}
 }

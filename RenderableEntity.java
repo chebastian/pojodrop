@@ -7,10 +7,12 @@ import android.graphics.Rect;
 public class RenderableEntity extends Entity
 {
 	Rect rect;
+	boolean mAlive;
 	public RenderableEntity(int id, Rect r)
 	{
 		super(id);
 		rect = r;
+		mAlive = true;
 	}
 	
 	public void Move(float x, float y)
@@ -22,6 +24,8 @@ public class RenderableEntity extends Entity
 	public void update(float time)
 	{
 		super.update(time);
+		rect.bottom = rect.top + rect.height();
+		rect.right = rect.left + rect.width();
 	}
 	
 	public void render(Canvas g)
@@ -43,5 +47,9 @@ public class RenderableEntity extends Entity
 	public int getY()
 	{
 		return rect.top;
+	}
+	
+	public boolean isAlive(){
+		return mAlive;
 	}
 }

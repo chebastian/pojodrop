@@ -2,11 +2,13 @@ package com.example.pojodrop;
 
 import java.util.Random;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.BlurMaskFilter.Blur;
 
 
 public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBlock>{
@@ -28,11 +30,12 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	protected static int UniqueIdCounter = 0;
 	public static int FallSpeed = 100;
 	protected float mSpeedScale;
+	public int mNumNeigbours;
 
 	public int colors[] = {Color.GREEN,Color.BLUE,Color.RED,Color.GRAY, Color.WHITE};
 	static Random rand = new Random();
 	boolean mNeedsToFade;
-	
+	Paint mPaint;
 	public PuzzleBlock(Point index, int w, int h)
 	{
 		super(0,new Rect((int)index.x*w, (int)index.y*h, w, h) );
@@ -74,6 +77,9 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		mNeedsToFade = false;
 		mSpeedScale = 1.0f;
 		CurrentState = new FallingState(this);
+		mPaint = new Paint();
+		mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.INNER));
+		mNumNeigbours = 0;
 	}
 	
 	public void SnapToPosition(int x, int y)
@@ -104,18 +110,23 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	
 	public void render(Canvas g)
 	{
-		Paint p = new Paint();
-		p.setColor(Colour);
-		p.setStrokeWidth(20);
 		int x = (int)rect.left;
 		int y = (int)rect.top;
 		if(!Alive)
-			p.setColor(Color.BLACK);
+			mPaint.setColor(Color.BLACK);
 		
 		int drawX = x + (int)((BLOCK_W-2)*1.0f-Scale);
-		int drawY = y + (int)((BLOCK_H-2)*1.0-Scale);
+		int drawY = y + (int)((BLOCK_H-2)*1.0-Scale); 
 		
-		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),p);
+		int c = mPaint.getColor();
+		mPaint.setColor(Colour);
+		mPaint.setStyle(Paint.Style.FILL);
+		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
+		
+		mPaint.setColor((int)(Colour - Colour*0.1));
+		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setStrokeWidth(2+(2*num));
+		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
 		CurrentState.render(g);
 	}
 	
