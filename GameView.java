@@ -165,10 +165,10 @@ public class GameView extends SurfaceView {
 	}
 	
 	public float getTimeScale(){
-		return 1.0f;
+		return mTimeScale;
 	}
 	
 	public void setTimeScale(float time){
-		mTimeScale = time;
+		mTimeScale = 1.0f + time;
 	}
 }

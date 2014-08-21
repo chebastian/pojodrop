@@ -70,6 +70,7 @@ public class SwipeListener implements OnTouchListener{
 		public boolean onDown(MotionEvent evt){
 			return true;
 		}
+
 		
 		public boolean onScroll(MotionEvent e1, MotionEvent e2, float velX, float velY){
 			boolean res = false;

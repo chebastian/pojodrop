@@ -14,7 +14,7 @@ class MainGameThread extends Thread {
 
 	public static final int WIN_WIDTH = 800;
 	public static final int WIN_HEIGHT = 600;
-	public static final float SESSION_PLAY_TIME = 240.0f;
+	public static final float SESSION_PLAY_TIME = 60.0f;
 	long lastTime = 0;
 	float elapsedTime = 0.0f;
 
@@ -45,7 +45,7 @@ class MainGameThread extends Thread {
 		mRunning = false;
 		mState = new GameState(game);
 		mState.Field.initGame(game);
-		mGameTime = 240.0f;
+		mGameTime = 0.0f;
 		
 		mGame.setOnTouchListener(new SwipeListener(mGame.getContext()){
 			public void onSwipeLeft(){
@@ -72,6 +72,10 @@ class MainGameThread extends Thread {
 				if(mState.Field.canRotateActiveBlock())
 					mState.Field.RotateActiveBlock();
 			}
+		}); 
+		
+		
+/*		mGame.setOnTouchListener(new BlockTouchListener(){
 
 			public void onDragRight(){
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
@@ -82,7 +86,7 @@ class MainGameThread extends Thread {
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0); 
 			}
-		}); 
+		});*/
 	}
 	
 	public void run()
@@ -166,7 +170,7 @@ class MainGameThread extends Thread {
 		mGame.entityManager().updateEntitys(time);
 		mGame.entityManager().cleanDeadEntitys(); 
 		mGameTime += time;
-		mGame.setTimeScale(mTotalTime / SESSION_PLAY_TIME );
+		mGame.setTimeScale(mGameTime / SESSION_PLAY_TIME );
 	}
 
 	public void GameDraw(Canvas g)
@@ -186,7 +190,7 @@ class MainGameThread extends Thread {
 		p.setColor(Color.RED);
 		g.drawText("Combo: " + mGame.getScoreTracker().getComboCounter(),10,100,p);
 		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 10, 80, p);
-		//g.drawText("fps "+fps, 100, 200, p);
+		g.drawText("timescale "+mGame.getTimeScale(), 100, 200, p);
 		mState.Render(g);
 		mGame.entityManager().renderEntitys(g);
 	}

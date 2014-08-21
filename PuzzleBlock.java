@@ -78,7 +78,7 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		mSpeedScale = 1.0f;
 		CurrentState = new FallingState(this);
 		mPaint = new Paint();
-		mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.INNER));
+		mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.OUTER));
 		mNumNeigbours = 0;
 	}
 	

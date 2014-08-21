@@ -544,6 +544,9 @@ public class PuzzleField extends RenderableEntity {
 		
 		start.x += PuzzleBlock.BLOCK_W;
 		PuzzleBlock block2 = new PuzzleBlock(start);
+		float tsc = mGame.getTimeScale();
+		block.setSpeedScale(tsc);
+		block2.setSpeedScale(tsc);
 		
 		ActiveBlock.clear();
 		ActiveBlock.add(block);
@@ -689,47 +692,6 @@ public class PuzzleField extends RenderableEntity {
 	{
 		return FIELD_HEIGHT * PuzzleBlock.BLOCK_H;
 	}
-
-	/*public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		if(arg0.getKeyChar() == 'd')
-		{
-			for(int i = 0; i < ActiveBlock.size(); i++)
-			{
-				if(CanMoveActiveBlockToCollumn(CollumnPosition(ActiveBlock.get(i))+1))
-					MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
-			}
-		}
-		
-		if(arg0.getKeyChar() == 'a')
-		{
-			for(int i = 0; i < ActiveBlock.size(); i++)
-			{
-				if(CanMoveActiveBlockToCollumn(CollumnPosition(ActiveBlock.get(i))-1))
-					MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
-			}
-		}
-		
-		if(arg0.getKeyChar() == 's')
-		{
-			for(int i = 0; i < ActiveBlock.size(); i++)
-			{
-				AddBlockToBottom(ActiveBlock.get(i));
-			}
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}*/
 	
 	
 	public void SetActiveBlockType(int t)
