@@ -13,11 +13,13 @@ import android.view.View.OnTouchListener;
 
 public class SwipeListener implements OnTouchListener{
 
+	GameView mGame;
 	private GestureDetector mDetector;
 	
-	public SwipeListener(Context con)
+	public SwipeListener(Context con, GameView game)
 	{
-		mDetector = new GestureDetector(con,new GestureListener());
+		mGame = game;
+		mDetector = new GestureDetector(con,new GestureListener(game));
 	}
 
 	public void onSwipeLeft()
@@ -53,6 +55,10 @@ public class SwipeListener implements OnTouchListener{
 		
 	}
 	
+	public void setCollumnValue(int x){
+		
+	}
+	
 	public boolean onTouch(View v,MotionEvent evt){
 		return mDetector.onTouchEvent(evt);
 	}
@@ -64,13 +70,14 @@ public class SwipeListener implements OnTouchListener{
 		private static final int DRAG_TRESHOLD = 100;
 		private static final int SWIPE_VELOCITY_TRESHOLD = 50;
 		
-		float mLastXValue;
-		
-		
-		public boolean onDown(MotionEvent evt){
-			return true;
+		float mLastXValue; 
+		public GestureListener(GameView view){
+			super();
 		}
 
+		public boolean onDown(MotionEvent evt){
+			return true;
+		} 
 		
 		public boolean onScroll(MotionEvent e1, MotionEvent e2, float velX, float velY){
 			boolean res = false;
@@ -80,14 +87,11 @@ public class SwipeListener implements OnTouchListener{
 				float dy = e1.getY() - e2.getY();
 				if(Math.abs(dx) > Math.abs(dy))
 				{
-					if(Math.abs(dx) > DRAG_TRESHOLD)
-					{
-						/*if(dx > 0)
-							onSwipeLeft();
-						else
-							onSwipeRight();*/ 
+					if(Math.abs(dx) > DRAG_TRESHOLD){
+						int colX = mGame.screenToCollumnIndex((int)e1.getRawX());
+						setCollumnValue(colX);
 						res = true;
-					}
+					} 
 				}
 			}
 			catch(Exception e){

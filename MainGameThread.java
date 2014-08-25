@@ -47,7 +47,7 @@ class MainGameThread extends Thread {
 		mState.Field.initGame(game);
 		mGameTime = 0.0f;
 		
-		mGame.setOnTouchListener(new SwipeListener(mGame.getContext()){
+		mGame.setOnTouchListener(new SwipeListener(mGame.getContext(),mGame){
 			public void onSwipeLeft(){
 				if(mState.Field.CanMoveActiveBlockInDirection(-1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
@@ -72,20 +72,25 @@ class MainGameThread extends Thread {
 				if(mState.Field.canRotateActiveBlock())
 					mState.Field.RotateActiveBlock();
 			}
+			
+			public void setCollumnValue(int x){
+				if(!mState.Field.hasActiveBlocks())
+						return; 
+				
+				if(mState.Field.CanMoveActiveBlockToCollumn(x))
+				{
+					int curX = mState.Field.CollumnPosition(mState.Field.ActiveBlock.get(0));
+					int dx =  x - curX;
+					if(mState.Field.CanMoveActiveBlockInDirection(dx))
+						mState.Field.MoveActiveBlock(dx * PuzzleBlock.BLOCK_W, 0);
+					
+				}
+				
+			}
 		}); 
 		
-		mGame.setOnTouchListener(new BlockTouchListener(mGame){
+/*		mGame.setOnTouchListener(new BlockTouchListener(mGame){
 
-			/*public void onDragRight(){
-				if(mState.Field.CanMoveActiveBlockInDirection(1))
-					mState.Field.MoveActiveBlock(PuzzleBlock.BLOCK_W, 0); 
-			}
-			
-			public void onDragLeft(){
-				if(mState.Field.CanMoveActiveBlockInDirection(1))
-					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0); 
-			}*/
-			
 			public void setColumnValue(int x){
 				if(!mState.Field.hasActiveBlocks())
 						return; 
@@ -99,7 +104,7 @@ class MainGameThread extends Thread {
 					
 				}
 			}
-		});
+		});*/
 	}
 	
 	public void run()
