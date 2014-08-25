@@ -28,6 +28,7 @@ public class PuzzleField extends RenderableEntity {
 	int mLastClusterSize;
 	//Game mGame;
 	GameView mGame;
+	BlockQueue mBlockQueue;
 	
 	boolean mNeedToUpdate;
 	
@@ -55,9 +56,11 @@ public class PuzzleField extends RenderableEntity {
 		mNeedToUpdate = false;
 	}
 	
-	public void initGame(GameView game)
+	public void init(GameView game)
 	{
 		mGame = game;
+		mBlockQueue = new BlockQueue(2);
+		mBlockQueue.createRandomQueue(100);
 	}
 	
 	public void update(float time)
@@ -305,7 +308,8 @@ public class PuzzleField extends RenderableEntity {
 	{ 
 		if(activeBlockReachedBottom())
 		{
-			AddNewBlock();
+			//AddNewBlock();
+			AddNewActiveBlock();
 			mElapsedTime = 0.0f;
 		} 
 	}
@@ -328,7 +332,12 @@ public class PuzzleField extends RenderableEntity {
 		return counter == ActiveBlock.size();
 	}
 	
-	public void AddNewBlock()
+	/*
+	 * THIS WHOLE FUNCTION IS NOT USED ANYMORE REMOVE 
+	 */
+	
+	
+	/*public void AddNewBlock()
 	{
 		for(int i = 0; i < ActiveBlock.size(); i++)
 		{
@@ -344,7 +353,8 @@ public class PuzzleField extends RenderableEntity {
 		ActiveBlock.clear();
 		ActiveBlock.add(block);
 		ActiveBlock.add(block2);
-	}
+		mCurrentRot = 0;
+	}*/
 	
 	public boolean hasBlockInState(int stateId)
 	{ 
@@ -552,9 +562,13 @@ public class PuzzleField extends RenderableEntity {
 		block.setSpeedScale(tsc);
 		block2.setSpeedScale(tsc);
 		
+		//block.setBlockType(mBlockQueue.getNext().getBlockType());
+		//block2.setBlockType(mBlockQueue.getNext().getBlockType());
+		
 		ActiveBlock.clear();
 		ActiveBlock.add(block);
 		ActiveBlock.add(block2); 
+		mCurrentRot = 0;
 	}
 	
 	public void setActiveBlockFallSpeedScale(float sc)
@@ -697,12 +711,6 @@ public class PuzzleField extends RenderableEntity {
 		return FIELD_HEIGHT * PuzzleBlock.BLOCK_H;
 	}
 	
-	
-	public void SetActiveBlockType(int t)
-	{
-		for(int i = 0; i < ActiveBlock.size(); i++)
-			ActiveBlock.get(i).SetType(t);
-	}
 	public int getLastClusterSize()
 	{
 		return mLastClusterSize;
@@ -710,6 +718,11 @@ public class PuzzleField extends RenderableEntity {
 	
 	public boolean hasActiveBlocks(){
 		return ActiveBlock.size() > 0;
+	}
+	
+	public BlockQueue getQueue()
+	{
+		return mBlockQueue;
 	}
 
 }

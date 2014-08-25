@@ -44,7 +44,7 @@ class MainGameThread extends Thread {
 		lastTime = System.currentTimeMillis();
 		mRunning = false;
 		mState = new GameState(game);
-		mState.Field.initGame(game);
+		mState.Field.init(game);
 		mGameTime = 0.0f;
 		
 		mGame.setOnTouchListener(new SwipeListener(mGame.getContext(),mGame){

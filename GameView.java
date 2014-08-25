@@ -41,6 +41,7 @@ public class GameView extends SurfaceView {
 	float mCanvasScaleValue;
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
+	int mLevel;
 	
 	public GameView(Context context) {
 		super(context);
@@ -52,6 +53,7 @@ public class GameView extends SurfaceView {
 		mEffectMgr = new EffectManager(this); 
 		mHolder = getHolder();
 		mCanvasScaleValue = 1.0f;
+		mLevel = 3;
 		mHolder.addCallback(new SurfaceHolder.Callback() {
 
 			@Override
@@ -184,4 +186,10 @@ public class GameView extends SurfaceView {
 		
 		return (int)index; 
 	}
+	
+	public int getLevel()
+	{
+		return mLevel;
+	}
+	
 }
