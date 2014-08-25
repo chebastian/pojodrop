@@ -711,6 +711,5 @@ public class PuzzleField extends RenderableEntity {
 	public boolean hasActiveBlocks(){
 		return ActiveBlock.size() > 0;
 	}
-	
 
 }

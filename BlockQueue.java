@@ -45,16 +45,14 @@ public class BlockQueue {
 	{
 		int blockMargin = 2;
 		Point renderPos = new Point(pos.x,pos.y);
-		pos.y += blockMargin; 
 
 		for(int i = 0; i < mBlocks.size(); i++)
 		{
+			renderPos.y += (i) * PuzzleBlock.BLOCK_H;
 			PuzzleBlock block = mBlocks.get(i);
-			block.SetPosition(pos.x, pos.y);
+			block.SetPosition(renderPos.x, renderPos.y);
 			block.render(g); 
-
-			pos.y += (1+i) * PuzzleBlock.BLOCK_H;
-			pos.y += blockMargin; 
+			renderPos.y += blockMargin; 
 		}
 	}
 

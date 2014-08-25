@@ -63,6 +63,7 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	public void initialize()
 	{
 		BlockType = 0;
+		colors = new int[]{0xFF00FFFF, 0xFF00A0FF, 0xFFFF00FF,0xFFFFFFFF};
 		
 		int r = rand.nextInt(3);
 		Colour = colors[r];
@@ -78,7 +79,7 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		mSpeedScale = 1.0f;
 		CurrentState = new FallingState(this);
 		mPaint = new Paint();
-		mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.OUTER));
+		//mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.OUTER));
 		mNumNeigbours = 0;
 	}
 	
@@ -118,15 +119,14 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		int drawX = x + (int)((BLOCK_W-2)*1.0f-Scale);
 		int drawY = y + (int)((BLOCK_H-2)*1.0-Scale); 
 		
-		int c = mPaint.getColor();
 		mPaint.setColor(Colour);
 		mPaint.setStyle(Paint.Style.FILL);
 		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
 		
-		mPaint.setColor((int)(Colour - Colour*0.1));
+		/*mPaint.setColor((int)(Colour - Colour*0.1));
 		mPaint.setStyle(Paint.Style.STROKE);
 		mPaint.setStrokeWidth(2+(2*num));
-		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
+		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);*/
 		CurrentState.render(g);
 	}
 	
