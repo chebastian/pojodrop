@@ -37,6 +37,8 @@ public class RenderableEntity extends Entity
 	{
 		rect.left = x;
 		rect.top = y;
+		rect.right = rect.left + PuzzleBlock.BLOCK_W;
+		rect.bottom = rect.top + PuzzleBlock.BLOCK_H;
 	}
 	
 	public int getX()

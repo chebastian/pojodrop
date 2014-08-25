@@ -28,7 +28,7 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 	public int NextPositonY;
 	public float Scale;
 	protected static int UniqueIdCounter = 0;
-	public static int FallSpeed = 100;
+	public static int FallSpeed = 140;
 	protected float mSpeedScale;
 	public int mNumNeigbours;
 
@@ -128,6 +128,10 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		mPaint.setStrokeWidth(2+(2*num));
 		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
 		CurrentState.render(g);
+	}
+	
+	public void renderAt(Canvas g, Point pos){
+		
 	}
 	
 	public void ChangeState(BlockState state)

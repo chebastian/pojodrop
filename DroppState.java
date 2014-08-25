@@ -7,6 +7,7 @@ public class DroppState extends BlockState {
 	int mStartingPosY;
 	public static int DroppStateID = 5;
 	float mFallSpeedChanger;
+	float mFallSpeed;
 	public DroppState(PuzzleBlock block) {
 		super(block);
 		// TODO Auto-generated constructor stub
@@ -18,12 +19,14 @@ public class DroppState extends BlockState {
 		mStepsToFall = steps;
 		mStartingPosY = block.getY();
 		StateID = DroppStateID;
-		mFallSpeedChanger = 1.5f;
+		mFallSpeedChanger = 2.5f;
+		mFallSpeed = 1.0f;
 	}
 	
 	public void update(float time)
 	{ 
 		Block.Move(0, (mFallSpeedChanger*PuzzleBlock.FallSpeed)*time);
+		//Block.Move(0, mFallSpeed*time);
 		if(mStepsToFall == -1)
 			return;
 		

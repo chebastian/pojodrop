@@ -123,6 +123,10 @@ public class PuzzleField extends RenderableEntity {
 		if(hasACombo)
 		{
 			mGame.getScoreTracker().increaseComboCounter();
+			int combo = mGame.getScoreTracker().getComboCounter();
+			if(combo > 1){
+				mGame.entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 1.0f));
+			}
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
 			mGame.entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.0f));
 			mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
@@ -702,6 +706,10 @@ public class PuzzleField extends RenderableEntity {
 	public int getLastClusterSize()
 	{
 		return mLastClusterSize;
+	}
+	
+	public boolean hasActiveBlocks(){
+		return ActiveBlock.size() > 0;
 	}
 	
 

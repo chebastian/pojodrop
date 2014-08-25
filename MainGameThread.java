@@ -74,10 +74,9 @@ class MainGameThread extends Thread {
 			}
 		}); 
 		
-		
-/*		mGame.setOnTouchListener(new BlockTouchListener(){
+		mGame.setOnTouchListener(new BlockTouchListener(mGame){
 
-			public void onDragRight(){
+			/*public void onDragRight(){
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
 					mState.Field.MoveActiveBlock(PuzzleBlock.BLOCK_W, 0); 
 			}
@@ -85,8 +84,22 @@ class MainGameThread extends Thread {
 			public void onDragLeft(){
 				if(mState.Field.CanMoveActiveBlockInDirection(1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0); 
+			}*/
+			
+			public void setColumnValue(int x){
+				if(!mState.Field.hasActiveBlocks())
+						return; 
+				
+				if(mState.Field.CanMoveActiveBlockToCollumn(x))
+				{
+					int curX = mState.Field.CollumnPosition(mState.Field.ActiveBlock.get(0));
+					int dx =  x - curX;
+					if(mState.Field.CanMoveActiveBlockInDirection(dx))
+						mState.Field.MoveActiveBlock(dx * PuzzleBlock.BLOCK_W, 0);
+					
+				}
 			}
-		});*/
+		});
 	}
 	
 	public void run()

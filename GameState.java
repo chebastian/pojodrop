@@ -12,6 +12,7 @@ public class GameState extends State {
 	float mLastKeyDown; 
 	Point mScorePosition; 
 	float mPlayingTime;
+	BlockQueue mBlockQueue;
 
 	public GameState(GameView game)
 	{
@@ -21,6 +22,11 @@ public class GameState extends State {
 		mLastKeyDown = 0.0f; 
 		mScorePosition = new Point(300, 80);
 		mPlayingTime = 0.0f;
+		mBlockQueue = new BlockQueue(3);
+		
+		mBlockQueue.addNewBlock();
+		mBlockQueue.addNewBlock();
+		mBlockQueue.addNewBlock(); 
 	}
 	
 	public void Update(float time)
@@ -42,6 +48,7 @@ public class GameState extends State {
 	public void Render(Canvas g)
 	{
 		Field.render(g);
+		mBlockQueue.renderAt(g, new Point(100,100));
 	}
 	
 }

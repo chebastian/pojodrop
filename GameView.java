@@ -38,6 +38,7 @@ public class GameView extends SurfaceView {
 	ScoreTracker mScoreTracker;
 	
 	float mTimeScale;
+	float mCanvasScaleValue;
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
 	
@@ -50,6 +51,7 @@ public class GameView extends SurfaceView {
 		mScoreTracker = new ScoreTracker(this);
 		mEffectMgr = new EffectManager(this); 
 		mHolder = getHolder();
+		mCanvasScaleValue = 1.0f;
 		mHolder.addCallback(new SurfaceHolder.Callback() {
 
 			@Override
@@ -127,9 +129,8 @@ public class GameView extends SurfaceView {
 		Paint p = new Paint();
 		p.setColor(Color.WHITE);
 		
-		canvas.drawText("Combo: " + mScoreTracker.getComboCounter(), 10, 10, p);
-		
-		
+		p.setTextSize(20.0f);
+		canvas.drawText("Combo: " + mScoreTracker.getComboCounter(), 10, 10, p); 
 	}
 	
 	public float getScaleValue(Canvas canvas)
@@ -137,6 +138,7 @@ public class GameView extends SurfaceView {
 		//TODO make scale usefull
 		float f = (canvas.getWidth()*0.5f) / 6;
 		float sc =  f / 32;
+		mCanvasScaleValue = sc;
 		return sc;
 	}
 	
@@ -170,5 +172,16 @@ public class GameView extends SurfaceView {
 	
 	public void setTimeScale(float time){
 		mTimeScale = 1.0f + time;
+	}
+	
+	public int screenToCollumnIndex(int x){
+		
+		float index = 0; 
+		index = this.getWidth() * mCanvasScaleValue; 
+		float scX = x + (PuzzleBlock.BLOCK_W );
+		
+		index = scX / (PuzzleBlock.BLOCK_W * mCanvasScaleValue);
+		
+		return (int)index; 
 	}
 }
