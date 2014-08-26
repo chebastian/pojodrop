@@ -26,7 +26,6 @@ public class PuzzleField extends RenderableEntity {
 	BlockField mField;
 	int mCurrentRot;
 	int mLastClusterSize;
-	//Game mGame;
 	GameView mGame;
 	BlockQueue mBlockQueue;
 	

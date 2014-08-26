@@ -67,7 +67,7 @@ public class SwipeListener implements OnTouchListener{
 	private final class GestureListener extends SimpleOnGestureListener{
 		
 		private static final int SWIPE_TRESHOLD = 20;
-		private static final int DRAG_TRESHOLD = 100;
+		private static final int DRAG_TRESHOLD = 20;
 		private static final int SWIPE_VELOCITY_TRESHOLD = 50;
 		
 		float mLastXValue; 
