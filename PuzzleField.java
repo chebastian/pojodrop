@@ -546,7 +546,7 @@ public class PuzzleField extends RenderableEntity {
 		for(int i = 0; i < ActiveBlock.size(); i++)
 		{
 			if(ActiveBlock.get(i).IsInState(IdleState.IdleStateID))
-				return false;
+				return false; 
 		}
 		return true;
 	}
@@ -597,6 +597,13 @@ public class PuzzleField extends RenderableEntity {
 								new Point(0,1),
 								new Point(-1,0)};
 		
+		int mNextRot = mCurrentRot+1;
+		if(mNextRot >= dirs.length)
+			mNextRot = 0;
+			
+		if(!CanMoveActiveBlockInDirection(dirs[mNextRot].x))
+			return;
+
 		mCurrentRot++;
 		
 		if(mCurrentRot > 3)
@@ -604,8 +611,6 @@ public class PuzzleField extends RenderableEntity {
 		
 		if(ActiveBlock.size() <= 0)
 			return;
-		
-		
 		
 		PuzzleBlock parent = ActiveBlock.get(0);
 		for(int i = 1; i < ActiveBlock.size(); i++)
