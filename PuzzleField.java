@@ -59,7 +59,7 @@ public class PuzzleField extends RenderableEntity {
 	public void init(GameView game)
 	{
 		mGame = game;
-		mBlockQueue = new BlockQueue(2);
+		mBlockQueue = new BlockQueue(3);
 		mBlockQueue.createRandomQueue(100);
 	}
 	
@@ -562,8 +562,8 @@ public class PuzzleField extends RenderableEntity {
 		block.setSpeedScale(tsc);
 		block2.setSpeedScale(tsc);
 		
-		//block.setBlockType(mBlockQueue.getNext().getBlockType());
-		//block2.setBlockType(mBlockQueue.getNext().getBlockType());
+		block.copyBlockType(mBlockQueue.getNext().getBlockType());
+		block2.copyBlockType(mBlockQueue.getNext().getBlockType());
 		
 		ActiveBlock.clear();
 		ActiveBlock.add(block);

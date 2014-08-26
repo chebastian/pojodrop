@@ -209,8 +209,9 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		return mSpeedScale;
 	}
 	
-	public void setBlockType(int type){
+	public void copyBlockType(int type){
 		BlockType = type;
+		Colour = colors[type];
 	}
 	
 	public int getBlockType(){

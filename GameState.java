@@ -48,7 +48,9 @@ public class GameState extends State {
 	public void Render(Canvas g)
 	{
 		Field.render(g);
-		Field.getQueue().renderAt(g, new Point(200,20));
+		int w = g.getWidth();
+		int h = g.getHeight();
+		Field.getQueue().renderAt(g, new Point((int)(h*0.1f),(int)(w*0.1)));
 	}
 	
 	public BlockQueue getBlockQueue()

@@ -26,7 +26,7 @@ public class BlockQueue {
 		mPaint.setColor(Color.WHITE);
 		mPaint.setTextSize(15.0f);
 		mRand = new Random();
-		mPreviewLength = 3;
+		mPreviewLength = 4;
 	} 
 	
 	public void createRandomQueue(int queueSize)
@@ -40,7 +40,7 @@ public class BlockQueue {
 	{
 		int randType = mRand.nextInt(mNumTypes);
 		PuzzleBlock block = new PuzzleBlock(new Point());
-		block.SetType(randType);
+		block.copyBlockType(randType);
 		
 		mBlocks.add(block);
 	}
@@ -68,17 +68,19 @@ public class BlockQueue {
 	public void renderAt(Canvas g, Point pos)
 	{
 		int blockMargin = 2;
-		int textMarginBottom = 0;
+		int textMarginBottom = 10;
 		Point renderPos = new Point(pos.x,pos.y);
 		g.drawText("Next: ", pos.x, pos.y + textMarginBottom, mPaint);
 		
 		for(int i = mBlocks.size()-1; i >= mBlocks.size()-mPreviewLength; i--)
 		{
-			renderPos.y = pos.y + (i * PuzzleBlock.BLOCK_H);
+			renderPos.y += PuzzleBlock.BLOCK_H; 
 			PuzzleBlock block = mBlocks.get(i);
 			block.SetPosition(renderPos.x, renderPos.y);
 			block.render(g); 
 			renderPos.y += blockMargin;
+			if(i % 2 == 0)
+				renderPos.y += blockMargin*2;
 		}
 	}
 
