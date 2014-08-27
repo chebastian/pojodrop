@@ -47,7 +47,7 @@ class MainGameThread extends Thread {
 		mState.Field.init(game);
 		mGameTime = 0.0f;
 		
-		/*mGame.setOnTouchListener(new SwipeListener(mGame.getContext(),mGame){
+		mGame.setOnTouchListener(new SwipeListener(mGame.getContext(),mGame){
 			public void onSwipeLeft(){
 				if(mState.Field.CanMoveActiveBlockInDirection(-1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
@@ -87,9 +87,9 @@ class MainGameThread extends Thread {
 				}
 				
 			}
-		}); */
+		}); 
 		
-		mGame.setOnTouchListener(new BlockTouchListener(mGame){
+/*		mGame.setOnTouchListener(new BlockTouchListener(mGame){
 
 			public void setColumnValue(int x){
 				if(!mState.Field.hasActiveBlocks())
@@ -104,7 +104,7 @@ class MainGameThread extends Thread {
 					
 				}
 			}
-		});
+		});*/
 	}
 	
 	public void run()

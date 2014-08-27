@@ -4,15 +4,17 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 
 
-public class RenderableEntity extends Entity
+public class RenderableEntity extends Entity implements Comparable<RenderableEntity>
 {
 	Rect rect;
+	int mLayerZ;
 	boolean mAlive;
 	public RenderableEntity(int id, Rect r)
 	{
 		super(id);
 		rect = r;
 		mAlive = true;
+		mLayerZ = 0;
 	}
 	
 	public void Move(float x, float y)
@@ -53,5 +55,16 @@ public class RenderableEntity extends Entity
 	
 	public boolean isAlive(){
 		return mAlive;
+	}
+	
+	public int getZ()
+	{
+		return mLayerZ;
+	}
+
+	@Override
+	public int compareTo(RenderableEntity other) {
+		// TODO Auto-generated method stub
+		return other.getZ() - getZ();
 	}
 }

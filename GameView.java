@@ -36,6 +36,7 @@ public class GameView extends SurfaceView {
 	int mTextWidth; 
 	SurfaceHolder mHolder;
 	ScoreTracker mScoreTracker;
+	float mPlayTime;
 	
 	float mTimeScale;
 	float mCanvasScaleValue;
@@ -53,6 +54,7 @@ public class GameView extends SurfaceView {
 		mEffectMgr = new EffectManager(this); 
 		mHolder = getHolder();
 		mCanvasScaleValue = 1.0f;
+		mPlayTime = 240.0f;
 		mLevel = 3;
 		mHolder.addCallback(new SurfaceHolder.Callback() {
 
@@ -190,6 +192,11 @@ public class GameView extends SurfaceView {
 	public int getLevel()
 	{
 		return mLevel;
+	}
+	
+	public float getPlayTime()
+	{
+		return mPlayTime;
 	}
 	
 }

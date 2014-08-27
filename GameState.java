@@ -23,10 +23,6 @@ public class GameState extends State {
 		mScorePosition = new Point(300, 80);
 		mPlayingTime = 0.0f;
 		mBlockQueue = new BlockQueue(3); 
-
-		mBlockQueue.addNewBlock();
-		mBlockQueue.addNewBlock();
-		mBlockQueue.addNewBlock(); 
 	}
 	
 	public void Update(float time)

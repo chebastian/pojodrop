@@ -11,7 +11,7 @@ import android.graphics.Rect;
 import android.graphics.BlurMaskFilter.Blur;
 
 
-public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBlock>{
+public class PuzzleBlock extends RenderableEntity{
 
 	static int BLOCK_W = 32;
 	static int BLOCK_H = 32;
@@ -196,9 +196,9 @@ public class PuzzleBlock extends RenderableEntity implements Comparable<PuzzleBl
 		mNeedsToFade = true;
 	}
 	@Override
-	public int compareTo(PuzzleBlock another) {
+	public int compareTo(RenderableEntity another) {
 		// TODO Auto-generated method stub
-		return another.top() - top();
+		return another.getY() - top();
 	}
 	
 	public void setSpeedScale(float sc){
