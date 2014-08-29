@@ -43,6 +43,7 @@ public class GameView extends SurfaceView {
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
 	int mLevel;
+
 	
 	public GameView(Context context) {
 		super(context);

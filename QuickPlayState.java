@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import android.graphics.Canvas;
+
 public class QuickPlayState extends State {
 
 	PuzzleField mField;
@@ -22,6 +24,11 @@ public class QuickPlayState extends State {
 	{
 		mField.update(time);
 		updatePlayTime(time);
+	}
+	
+	public void Render(Canvas g)
+	{
+		mField.render(g);
 	}
 	
 	public void updatePlayTime(float time){

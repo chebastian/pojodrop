@@ -71,6 +71,9 @@ class MainGameThread extends Thread {
 			public void onDoubleTapped(){
 				if(mState.Field.canRotateActiveBlock())
 					mState.Field.RotateActiveBlock();
+				
+				GetServerListTask lst = new GetServerListTask();
+				lst.execute("");
 			}
 			
 			public void setCollumnValue(int x){
