@@ -20,8 +20,8 @@ public class ScreenShake extends ScreenEffect {
 	float mTotalTime;
 	float mTimeBetweenShakes;
 	
-	public ScreenShake(GameView game,float duration, float intensity) {
-		super(game);
+	public ScreenShake(PojoGame game,float duration, float intensity) {
+		super(game,game.getView());
 		mDuration = duration;
 		mIntensity = intensity;
 		mElapsedTime = 0.0f;
@@ -33,7 +33,7 @@ public class ScreenShake extends ScreenEffect {
 	}
 
 	public void OnEnter(GameView game){
-		mPoints = new float[8];
+		mPoints = new float[8];  
 		for(int i = 0; i < mPoints.length; i++)
 		{
 			mPoints[i] = ((float) Math.random()  * mIntensity); 
@@ -75,7 +75,7 @@ public class ScreenShake extends ScreenEffect {
 	public void Render(Canvas g)
 	{
 		//g.translate(getNextTarget(), 0);
-		//g.scale(getNextTarget(), getNextTarget());
+		//g.scale(getNextTarget(), getNextTarget()); 
 		g.skew(getNextTarget(), getNextTarget());
 		
 	}

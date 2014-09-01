@@ -18,7 +18,8 @@ class MainGameThread extends Thread {
 	long lastTime = 0;
 	float elapsedTime = 0.0f;
 
-	private GameView mGame;
+	private GameView mGameView;
+	private PojoGame mGame;
 
 	float x = 0; 
 	int DESIRED_FPS = 60;
@@ -35,19 +36,23 @@ class MainGameThread extends Thread {
 	float mTotalTime;
 	float mGameTime;
 	
-	GameState mState;
+	//GameState mState;
+	QuickPlayState mState;
 
-	public MainGameThread(GameView game)
+	public MainGameThread(GameView gameview, PojoGame game)
 	{
 		mGame = game;
+		mGameView = gameview;
+
 		lastTime = 0;
 		lastTime = System.currentTimeMillis();
 		mRunning = false;
-		mState = new GameState(game);
+		mState = new QuickPlayState(game);
+		mState.OnEnter(game);
 		mState.Field.init(game);
 		mGameTime = 0.0f;
 		
-		mGame.setOnTouchListener(new SwipeListener(mGame.getContext(),mGame){
+		mGameView.setOnTouchListener(new SwipeListener(mGameView.getContext(),mGame){
 			public void onSwipeLeft(){
 				if(mState.Field.CanMoveActiveBlockInDirection(-1))
 					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
@@ -153,13 +158,13 @@ class MainGameThread extends Thread {
 			elapsedTime = elapsed;
 			GameUpdate(elapsed);
 			mState.Update(elapsed);
-			mGame.mEffectMgr.updateEffects(elapsed);
+			mGameView.getEffectMgr().updateEffects(elapsed);
 
 			try
 			{
-				mCanvas = mGame.getHolder().lockCanvas();
-				synchronized (mGame.getHolder()) {
-					mGame.draw(mCanvas);
+				mCanvas = mGameView.getHolder().lockCanvas();
+				synchronized (mGameView.getHolder()) {
+					mGameView.draw(mCanvas);
 				}
 				
 				try {
@@ -174,11 +179,10 @@ class MainGameThread extends Thread {
 			}
 			finally{
 				if(mCanvas != null)
-					mGame.getHolder().unlockCanvasAndPost(mCanvas);
+					mGameView.getHolder().unlockCanvasAndPost(mCanvas);
 			}
 
-			lastTime = time;
-
+			lastTime = time; 
 		}
 	}
 
@@ -188,8 +192,8 @@ class MainGameThread extends Thread {
 		seconds += time;
 		x += time * 25.0f;
 		mTotalTime += time;
-		mGame.entityManager().updateEntitys(time);
-		mGame.entityManager().cleanDeadEntitys(); 
+		mGame.getView().entityManager().updateEntitys(time);
+		mGame.getView().entityManager().cleanDeadEntitys(); 
 		mGameTime += time;
 		mGame.setTimeScale(mGameTime / SESSION_PLAY_TIME );
 	}
@@ -213,7 +217,7 @@ class MainGameThread extends Thread {
 		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 10, 80, p);
 		g.drawText("timescale "+mGame.getTimeScale(), 100, 200, p);
 		mState.Render(g);
-		mGame.entityManager().renderEntitys(g);
+		mGame.getView().entityManager().renderEntitys(g);
 	}
 	
 	public void clearGameScreen(Canvas g,int color)

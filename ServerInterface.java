@@ -1,8 +1,13 @@
 package com.example.pojodrop;
 
+import java.io.BufferedReader;
+import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -11,14 +16,21 @@ import java.net.URLEncoder;
 
 public class ServerInterface {
 	
-	protected String SERVER_URL = "http://www.hassanpur.com/AndroidListServerExample/server.php";
+	protected String SERVER_URL = "http://sebastianferngren.com/connectToDB.php";
 	public ServerInterface() { 
 
 	}
 	
 	public String getServerList()
 	{
-		String data = "command="+URLEncoder.encode("getAnimalList");
+		String data = "";
+		try {
+			data = URLEncoder.encode("command","UTF-8")+ "=" +URLEncoder.encode("getList","UTF-8");
+			data = "";
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return ServerInterface.executeHttpRequest(this.SERVER_URL, data);
 	}
 	
@@ -31,23 +43,33 @@ public class ServerInterface {
 			
 			connection.setDoInput(true);
 			connection.setDoOutput(true);
-			connection.setUseCaches(false);
-			connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-			
-			DataOutputStream outStream = new DataOutputStream(connection.getOutputStream());
-			outStream.writeBytes(data);
-			outStream.flush();
-			outStream.close();
-			
-			DataInputStream inStream = new DataInputStream(connection.getInputStream());
-			String inputLine = "";
-			
-			while((inputLine = inStream.readLine()) != null)
-			{
-				str += inputLine;
-			}
-			
-			inStream.close();
+            
+            OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
+            wr.write(data);
+            wr.flush();
+
+            // Send the POST data
+            /*DataOutputStream dataOut = new DataOutputStream(connection.getOutputStream());
+            dataOut.writeBytes(data);
+            dataOut.flush();
+            dataOut.close();*/
+
+            // get the response from the server and store it in result
+            DataInputStream dataIn = new DataInputStream(connection.getInputStream()); 
+            String inputLine;
+            /*while ((inputLine = dataIn.readLine()) != null) {
+                    str += inputLine;
+            }*/
+            
+            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            while((inputLine = br.readLine()) != null)
+            {
+            	sb.append(inputLine);
+            }
+            
+            str = sb.toString();
+            dataIn.close();
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

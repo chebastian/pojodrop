@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import java.security.spec.MGF1ParameterSpec;
+
 import android.content.Context;
 import android.view.GestureDetector;
 import android.graphics.Canvas;
@@ -35,28 +37,19 @@ public class GameView extends SurfaceView {
 	MainGameThread mThread;
 	int mTextWidth; 
 	SurfaceHolder mHolder;
-	ScoreTracker mScoreTracker;
-	float mPlayTime;
 	
-	float mTimeScale;
 	float mCanvasScaleValue;
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
-	int mLevel;
-
+	PojoGame mGame;
 	
 	public GameView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
-		mTimeScale = 1.0f;
+		mGame = new PojoGame(this);
 		mEntityManager = new EntityManager();
-		mThread = new MainGameThread(this);
-		mScoreTracker = new ScoreTracker(this);
+		mThread = new MainGameThread(this,mGame);
 		mEffectMgr = new EffectManager(this); 
-		mHolder = getHolder();
-		mCanvasScaleValue = 1.0f;
-		mPlayTime = 240.0f;
-		mLevel = 3;
+		mHolder = this.getHolder();
 		mHolder.addCallback(new SurfaceHolder.Callback() {
 
 			@Override
@@ -131,11 +124,6 @@ public class GameView extends SurfaceView {
 		mEffectMgr.renderEffects(canvas);
 		//canvas.skew(0.2f, 0.5f);
 		canvas.scale(sz, sz);
-		Paint p = new Paint();
-		p.setColor(Color.WHITE);
-		
-		p.setTextSize(20.0f);
-		canvas.drawText("Combo: " + mScoreTracker.getComboCounter(), 10, 10, p); 
 	}
 	
 	public float getScaleValue(Canvas canvas)
@@ -163,20 +151,8 @@ public class GameView extends SurfaceView {
 		return mEffectMgr;
 	}
 	
-	public ScoreTracker getScoreTracker(){
-		return mScoreTracker;
-	}
-	
 	public EntityManager entityManager(){
 		return mEntityManager;
-	}
-	
-	public float getTimeScale(){
-		return mTimeScale;
-	}
-	
-	public void setTimeScale(float time){
-		mTimeScale = 1.0f + time;
 	}
 	
 	public int screenToCollumnIndex(int x){
@@ -189,15 +165,4 @@ public class GameView extends SurfaceView {
 		
 		return (int)index; 
 	}
-	
-	public int getLevel()
-	{
-		return mLevel;
-	}
-	
-	public float getPlayTime()
-	{
-		return mPlayTime;
-	}
-	
 }

@@ -26,7 +26,8 @@ public class PuzzleField extends RenderableEntity {
 	BlockField mField;
 	int mCurrentRot;
 	int mLastClusterSize;
-	GameView mGame;
+	GameView mGameView;
+	PojoGame mGame;
 	BlockQueue mBlockQueue;
 	
 	boolean mNeedToUpdate;
@@ -55,7 +56,7 @@ public class PuzzleField extends RenderableEntity {
 		mNeedToUpdate = false;
 	}
 	
-	public void init(GameView game)
+	public void init(PojoGame game)
 	{
 		mGame = game;
 		mBlockQueue = new BlockQueue(3);
@@ -127,11 +128,11 @@ public class PuzzleField extends RenderableEntity {
 			mGame.getScoreTracker().increaseComboCounter();
 			int combo = mGame.getScoreTracker().getComboCounter();
 			if(combo > 1){
-				mGame.entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 1.0f));
+				mGame.getView().entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 1.0f));
 			}
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
-			mGame.entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.0f));
-			mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
+			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.0f));
+			//mGame.getView().getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
 			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f));
 			
 		}

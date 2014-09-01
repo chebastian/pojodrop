@@ -30,7 +30,7 @@ public class FadingState extends BlockState{
 	
 	public void render(Canvas g)
 	{
-		Block.Scale = 1.0f - (mElapsedTime / mFadeTime);
+		Block.Scale = (float) Math.sin((Math.PI) * (1.0f - (mElapsedTime / mFadeTime)));
 	}
 	
 	public void onExit()

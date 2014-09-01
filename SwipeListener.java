@@ -13,10 +13,10 @@ import android.view.View.OnTouchListener;
 
 public class SwipeListener implements OnTouchListener{
 
-	GameView mGame;
+	PojoGame mGame;
 	private GestureDetector mDetector;
 	
-	public SwipeListener(Context con, GameView game)
+	public SwipeListener(Context con, PojoGame game)
 	{
 		mGame = game;
 		mDetector = new GestureDetector(con,new GestureListener(game));
@@ -71,7 +71,7 @@ public class SwipeListener implements OnTouchListener{
 		private static final int SWIPE_VELOCITY_TRESHOLD = 50;
 		
 		float mLastXValue; 
-		public GestureListener(GameView view){
+		public GestureListener(PojoGame view){
 			super();
 		}
 
@@ -88,7 +88,7 @@ public class SwipeListener implements OnTouchListener{
 				if(Math.abs(dx) > Math.abs(dy))
 				{
 					if(Math.abs(dx) > DRAG_TRESHOLD){
-						int colX = mGame.screenToCollumnIndex((int)e1.getRawX());
+						int colX = mGame.getView().screenToCollumnIndex((int)e1.getRawX());
 						setCollumnValue(colX);
 						res = true;
 					} 

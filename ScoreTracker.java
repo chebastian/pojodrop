@@ -7,9 +7,9 @@ public class ScoreTracker {
 
 	int mScore;
 	int mComboCounter;
-	GameView mGame;
+	PojoGame mGame;
 	
-	public ScoreTracker(GameView game)
+	public ScoreTracker(PojoGame game)
 	{
 		mScore = 0;
 		mComboCounter = 0;

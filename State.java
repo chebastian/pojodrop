@@ -4,8 +4,8 @@ import android.graphics.Canvas;
 
 class State
 {
-	GameView mGame;
-	public State(GameView game)
+	PojoGame mGame;
+	public State(PojoGame game)
 	{
 		mGame = game;
 	}

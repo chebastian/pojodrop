@@ -1,34 +1,46 @@
 package com.example.pojodrop;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 
 public class QuickPlayState extends State {
 
-	PuzzleField mField;
+	PuzzleField Field;
 	float mPlayTime;
+	Paint mTextPaint;
 	
-	public QuickPlayState(GameView game) {
+	public QuickPlayState(PojoGame game) {
 		super(game);
 		// TODO Auto-generated constructor stub
+		Field = new PuzzleField(6, 12);
 	}
 	
-	public void OnEnter(GameView game)
-	{
-		mField = new PuzzleField(6, 12);
-		mField.init(game);
+	public void OnEnter(PojoGame game)
+	{ 
+		mTextPaint = new Paint();
+		mTextPaint.setTextSize(20.0f);
+		mTextPaint.setFakeBoldText(true);
+		mTextPaint.setColor(Color.WHITE);
 		
 		mPlayTime = game.getPlayTime();
 	}
 	
 	public void Update(float time)
 	{
-		mField.update(time);
+		Field.update(time);
 		updatePlayTime(time);
 	}
 	
 	public void Render(Canvas g)
 	{
-		mField.render(g);
+		Field.render(g);
+		renderCountDown(g);
+	}
+	
+	public void renderCountDown(Canvas g)
+	{
+		g.drawText(""+mPlayTime, 0, 100, mTextPaint);
 	}
 	
 	public void updatePlayTime(float time){

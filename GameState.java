@@ -14,7 +14,7 @@ public class GameState extends State {
 	float mPlayingTime;
 	BlockQueue mBlockQueue;
 
-	public GameState(GameView game)
+	public GameState(PojoGame game)
 	{
 		super(game);
 		Field = new PuzzleField(6,13);
