@@ -13,19 +13,31 @@ public class PojoGame {
 	float mCanvasScaleValue;
 	int mLevel; 
 	GameView mView;
-	GameState mCurrentState;
+	State mCurrentState;
+	PuzzleField mField;
+	int mFieldWidth, mFieldHeight;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
 		mView = view;
 		mTimeScale = 1.0f;
-		mPlayTime = 240.0f;
+		mPlayTime = 10.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
-		mLevel = 3;
-		mCurrentState = new GameState(this);
+		mFieldWidth = 6;
+		mFieldHeight  = 13;
+		mLevel = 3; 
+		resetActiveField();
+		changeState(new QuickPlayState(this)); 
 	}
 	
+	
+	public void resetActiveField()
+	{
+		mField = new PuzzleField(mFieldWidth, mFieldHeight);
+		mField.init(this);
+	}
+
 	public int getLevel()
 	{
 		return mLevel;
@@ -68,7 +80,7 @@ public class PojoGame {
 		return mView;
 	}
 	
-	public void changeState(GameState state){
+	public void changeState(State state){
 		if(mCurrentState != null){
 			mCurrentState.OnExit(getView());
 		}
@@ -77,8 +89,13 @@ public class PojoGame {
 		mCurrentState = state;
 	} 
 	
-	public GameState currentState()
+	public State currentState()
 	{
 		return mCurrentState;
+	}
+	
+	public PuzzleField getActiveField()
+	{
+		return mField;
 	}
 }

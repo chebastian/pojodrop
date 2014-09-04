@@ -1,10 +1,8 @@
 package com.example.pojodrop;
 
-import java.security.spec.MGF1ParameterSpec;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;

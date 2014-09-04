@@ -47,57 +47,10 @@ class MainGameThread extends Thread {
 		lastTime = 0;
 		lastTime = System.currentTimeMillis();
 		mRunning = false;
-		mState = new QuickPlayState(game);
+		/*mState = new QuickPlayState(game);
 		mState.OnEnter(game);
-		mState.Field.init(game);
-		mGameTime = 0.0f;
-		
-		mGameView.setOnTouchListener(new SwipeListener(mGameView.getContext(),mGame){
-			public void onSwipeLeft(){
-				if(mState.Field.CanMoveActiveBlockInDirection(-1))
-					mState.Field.MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
-			}
-			
-			public void onSwipeRight(){
-				if(mState.Field.CanMoveActiveBlockInDirection(1))
-					mState.Field.MoveActiveBlock(PuzzleBlock.BLOCK_W, 0);
-			}
-			
-			public void onSwipeDown(){
-				mState.Field.DropActiveBlock();
-				mState.Field.AddNewActiveBlock();
-			}
-			
-			public void onSwipeUp(){
-				if(mState.Field.canRotateActiveBlock())
-					mState.Field.RotateActiveBlock();
-			}
-			
-			public void onDoubleTapped(){
-				if(mState.Field.canRotateActiveBlock())
-					mState.Field.RotateActiveBlock();
-				
-				GetServerListTask lst = new GetServerListTask();
-				//lst.execute("");
-				//kFieldLogger log = new FieldLogger();
-				//log.saveSnapshotOfField(mState.Field);
-			}
-			
-			public void setCollumnValue(int x){
-				if(!mState.Field.hasActiveBlocks())
-						return; 
-				
-				if(mState.Field.CanMoveActiveBlockToCollumn(x))
-				{
-					int curX = mState.Field.CollumnPosition(mState.Field.ActiveBlock.get(0));
-					int dx =  x - curX;
-					if(mState.Field.CanMoveActiveBlockInDirection(dx))
-						mState.Field.MoveActiveBlock(dx * PuzzleBlock.BLOCK_W, 0);
-					
-				}
-				
-			}
-		}); 
+		mState.Field.init(game);*/
+		mGameTime = 0.0f; 
 		
 /*		mGame.setOnTouchListener(new BlockTouchListener(mGame){
 
@@ -159,7 +112,6 @@ class MainGameThread extends Thread {
 
 			elapsedTime = elapsed;
 			GameUpdate(elapsed);
-			mState.Update(elapsed);
 			mGameView.getEffectMgr().updateEffects(elapsed);
 
 			try
@@ -198,6 +150,8 @@ class MainGameThread extends Thread {
 		mGame.getView().entityManager().cleanDeadEntitys(); 
 		mGameTime += time;
 		mGame.setTimeScale(mGameTime / SESSION_PLAY_TIME );
+		
+		mGame.currentState().Update(time);
 	}
 
 	public void GameDraw(Canvas g)
@@ -215,11 +169,8 @@ class MainGameThread extends Thread {
 		}
 
 		p.setColor(Color.RED);
-		g.drawText("Combo: " + mGame.getScoreTracker().getComboCounter(),10,100,p);
-		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 10, 80, p);
-		g.drawText("timescale "+mGame.getTimeScale(), 100, 200, p);
-		mState.Render(g);
 		mGame.getView().entityManager().renderEntitys(g);
+		mGame.currentState().Render(g);
 	}
 	
 	public void clearGameScreen(Canvas g,int color)
