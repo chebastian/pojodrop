@@ -89,7 +89,6 @@ public class PuzzleField extends RenderableEntity {
 		if(activeBlockReachedBottom() || blocksHasGoneIdle)
 		{
 			lookForBlockClusters(); 
-			System.out.print("\nCHECKING\n");
 		}
 
 		handleBlockRemoval();
@@ -553,7 +552,7 @@ public class PuzzleField extends RenderableEntity {
 	
 	public void AddNewActiveBlock()
 	{
-		Point start = new Point(0, 0);
+		Point start = new Point(PuzzleBlock.BLOCK_W*2, 0);
 		PuzzleBlock block = new PuzzleBlock(start);
 		
 		start.x += PuzzleBlock.BLOCK_W;

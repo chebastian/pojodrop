@@ -13,7 +13,9 @@ public class GetServerListTask extends AsyncTask<String, String, String>{
 	protected String doInBackground(String... arg0) {
 		ServerInterface server = new ServerInterface();
 		
-		String list = server.getServerList();
+		//String list = server.getServerList();
+		String list ="";
+		server.addScore("QQSefe", 998);
 		return list;
 	}
 	

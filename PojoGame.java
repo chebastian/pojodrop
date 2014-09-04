@@ -13,6 +13,7 @@ public class PojoGame {
 	float mCanvasScaleValue;
 	int mLevel; 
 	GameView mView;
+	GameState mCurrentState;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
@@ -22,6 +23,7 @@ public class PojoGame {
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
 		mLevel = 3;
+		mCurrentState = new GameState(this);
 	}
 	
 	public int getLevel()
@@ -31,6 +33,7 @@ public class PojoGame {
 	
 	public void render(Canvas g)
 	{
+		currentState().Render(g);
 		Paint p = new Paint();
 		p.setColor(Color.WHITE);
 		
@@ -38,6 +41,11 @@ public class PojoGame {
 		g.drawText("Combo: " + mScoreTracker.getComboCounter(), 10, 10, p); 
 	} 
 	
+	public void update(float time)
+	{
+		currentState().Update(time);
+	}
+
 	public float getPlayTime()
 	{
 		return mPlayTime;
@@ -59,5 +67,18 @@ public class PojoGame {
 	{
 		return mView;
 	}
-
+	
+	public void changeState(GameState state){
+		if(mCurrentState != null){
+			mCurrentState.OnExit(getView());
+		}
+		
+		state.OnEnter(getView());
+		mCurrentState = state;
+	} 
+	
+	public GameState currentState()
+	{
+		return mCurrentState;
+	}
 }

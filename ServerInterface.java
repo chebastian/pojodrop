@@ -13,6 +13,14 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 public class ServerInterface {
 	
@@ -32,6 +40,36 @@ public class ServerInterface {
 			e.printStackTrace();
 		}
 		return ServerInterface.executeHttpRequest(this.SERVER_URL, data);
+	}
+	
+	public void addScore(String name, int score)
+	{
+		ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("command", "addNewScore"));
+		params.add(new BasicNameValuePair("name", name));
+		params.add(new BasicNameValuePair("score", ""+score));
+		ServerInterface.executeRequest(this.SERVER_URL, params);
+	}
+	
+	public static String executeRequest(String _url, ArrayList<NameValuePair> commands)
+	{
+		String ret = "";
+		try{ 
+			
+
+			HttpClient client = new DefaultHttpClient();
+			HttpPost post = new HttpPost(_url);
+			post.setEntity(new UrlEncodedFormEntity(commands));
+			client.execute(post);
+			
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ret;
 	}
 	
 	public static String executeHttpRequest(String _url, String data)

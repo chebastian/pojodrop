@@ -37,7 +37,7 @@ class MainGameThread extends Thread {
 	float mGameTime;
 	
 	//GameState mState;
-	QuickPlayState mState;
+//	QuickPlayState mState;
 
 	public MainGameThread(GameView gameview, PojoGame game)
 	{
@@ -78,7 +78,9 @@ class MainGameThread extends Thread {
 					mState.Field.RotateActiveBlock();
 				
 				GetServerListTask lst = new GetServerListTask();
-				lst.execute("");
+				//lst.execute("");
+				//kFieldLogger log = new FieldLogger();
+				//log.saveSnapshotOfField(mState.Field);
 			}
 			
 			public void setCollumnValue(int x){

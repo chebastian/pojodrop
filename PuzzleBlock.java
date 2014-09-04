@@ -218,4 +218,11 @@ public class PuzzleBlock extends RenderableEntity{
 		return BlockType;
 	}
 	
+	public String toString()
+	{
+		String str = "";
+		str = "[" + BlockType + "]";
+		return str;
+	}
+	
 }

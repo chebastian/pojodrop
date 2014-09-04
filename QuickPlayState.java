@@ -3,6 +3,7 @@ package com.example.pojodrop;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 public class QuickPlayState extends State {
 
@@ -36,6 +37,7 @@ public class QuickPlayState extends State {
 	{
 		Field.render(g);
 		renderCountDown(g);
+		Field.getQueue().renderAt(g, new Point(164,0));
 	}
 	
 	public void renderCountDown(Canvas g)
