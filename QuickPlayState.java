@@ -13,9 +13,6 @@ public class QuickPlayState extends State {
 	
 	public QuickPlayState(PojoGame game) {
 		super(game);
-		/*Field = new PuzzleField(6, 12);
-		Field.init(game);*/
-//		Field = game.getActiveField(); 
 		mGame.resetActiveField();
 	}
 	

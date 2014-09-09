@@ -21,6 +21,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 public class ServerInterface {
 	
@@ -32,14 +33,14 @@ public class ServerInterface {
 	public String getServerList()
 	{
 		String data = "";
-		try {
-			data = URLEncoder.encode("command","UTF-8")+ "=" +URLEncoder.encode("getList","UTF-8");
-			data = "";
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return ServerInterface.executeHttpRequest(this.SERVER_URL, data);
+		//try {
+			//data = URLEncoder.encode("command","UTF-8")+ "=" +URLEncoder.encode("getList","UTF-8");
+			//data = "";
+			ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("command", "getList"));
+			executeRequest(this.SERVER_URL,params);
+		//}
+		return data;
 	}
 	
 	public void addScore(String name, int score)
@@ -61,6 +62,8 @@ public class ServerInterface {
 			HttpPost post = new HttpPost(_url);
 			post.setEntity(new UrlEncodedFormEntity(commands));
 			client.execute(post);
+			
+			ret = EntityUtils.toString(post.getEntity());
 			
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block

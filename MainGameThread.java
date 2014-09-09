@@ -132,8 +132,13 @@ class MainGameThread extends Thread {
 				GameDraw(mCanvas);
 			}
 			finally{
+				boolean res = true;
+				while(res != false)
 				if(mCanvas != null)
+				{ 
 					mGameView.getHolder().unlockCanvasAndPost(mCanvas);
+					res = mCanvas == null;
+				}
 			}
 
 			lastTime = time; 
