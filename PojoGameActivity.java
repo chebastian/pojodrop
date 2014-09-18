@@ -4,6 +4,8 @@ import com.example.pojodrop.util.SystemUiHider;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -50,12 +52,18 @@ public class PojoGameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.activity_pojo_game);
-        setContentView(new GameView(this));
+        setContentView(R.layout.activity_pojo_game);
+        //setContentView(new GameView(this));
+        FragmentManager fm = getFragmentManager();
+        Fragment frag = fm.findFragmentById(R.id.fragmentContainer);
+        
+        if(frag == null)
+        {
+        	frag = new MenuFragment();
+        	fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
+        }
         //setContentView(R.layout.activity_game_menu);
-
-        final View controlsView = findViewById(R.id.fullscreen_content_controls);
-        final View contentView = findViewById(R.id.fullscreen_content); }
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {

@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +12,7 @@ public class QuickPlayState extends State {
 	PuzzleField Field;
 	float mPlayTime;
 	Paint mTextPaint;
+	PlaytimeBar mTimeBar;
 	
 	public QuickPlayState(PojoGame game) {
 		super(game);
@@ -24,6 +27,9 @@ public class QuickPlayState extends State {
 		mTextPaint.setColor(Color.WHITE);
 		
 		mPlayTime = mGame.getPlayTime();
+		mTimeBar = new PlaytimeBar(0, new Point(300,100), 100, (int)mPlayTime);
+		mGame.getView().entityManager().addEntity(mTimeBar);
+
 		mGame.getView().setOnTouchListener(new SwipeListener(mGame.getView().getContext(),mGame){
 			public void onSwipeLeft(){
 				if(mGame.getActiveField().CanMoveActiveBlockInDirection(-1))
@@ -37,7 +43,7 @@ public class QuickPlayState extends State {
 			
 			public void onSwipeDown(){
 				mGame.getActiveField().DropActiveBlock();
-				mGame.getActiveField().AddNewActiveBlock();
+				//mGame.getActiveField().AddNewActiveBlock();
 			}
 			
 			public void onSwipeUp(){
@@ -49,8 +55,6 @@ public class QuickPlayState extends State {
 				if(mGame.getActiveField().canRotateActiveBlock())
 					mGame.getActiveField().RotateActiveBlock();
 				
-				GetServerListTask lst = new GetServerListTask();
-				//lst.execute("");
 				//kFieldLogger log = new FieldLogger();
 				//log.saveSnapshotOfField(mState.Field);
 			}
@@ -76,9 +80,16 @@ public class QuickPlayState extends State {
 	{
 		mGame.getActiveField().update(time);
 		updatePlayTime(time);
-		
+
+		if(!mGame.getActiveField().hasFadingBlocks() && mGame.getActiveField().hasActiveBlocks())
+			mTimeBar.setActive(true);
+		else
+			mTimeBar.setActive(false);
+
 		if(gameIsOver()){
+			mGame.mView.mThread.setRunnint(false);
 			mGame.changeState(new PresentScoreState(mGame));
+
 		}
 	}
 	
@@ -90,14 +101,13 @@ public class QuickPlayState extends State {
 		Paint p = new Paint();
 		p.setTextSize(20.0f);
 		p.setColor(Color.WHITE);
-		g.drawText("Combo: " + mGame.getScoreTracker().getComboCounter(),10,100,p);
-		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 10, 80, p);
-		g.drawText("timescale "+mGame.getTimeScale(), 100, 200, p);
+		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 300, 80, p);
 	}
 	
 	public void renderCountDown(Canvas g)
 	{
-		g.drawText(""+mPlayTime, 0, 100, mTextPaint);
+		mTextPaint.setTextSize(20.0f);
+		g.drawText(""+mPlayTime, 100, 100, mTextPaint);
 	}
 	
 	public void updatePlayTime(float time){
@@ -106,7 +116,7 @@ public class QuickPlayState extends State {
 	
 	public boolean gameIsOver()
 	{
-		return mPlayTime <= 0;
+		return mTimeBar.isDone();
 	}
 
 	public void OnExit(GameView game)

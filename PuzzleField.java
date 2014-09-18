@@ -127,10 +127,10 @@ public class PuzzleField extends RenderableEntity {
 			mGame.getScoreTracker().increaseComboCounter();
 			int combo = mGame.getScoreTracker().getComboCounter();
 			if(combo > 1){
-				mGame.getView().entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 1.0f));
+				mGame.getView().entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 2.0f));
 			}
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
-			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.0f));
+			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.5f));
 			//mGame.getView().getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
 			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f));
 			
@@ -728,5 +728,7 @@ public class PuzzleField extends RenderableEntity {
 	{
 		return mBlockQueue;
 	}
+	
+	
 
 }

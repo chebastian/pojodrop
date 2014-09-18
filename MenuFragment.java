@@ -1,6 +1,8 @@
 package com.example.pojodrop;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -12,6 +14,7 @@ import android.widget.Button;
 public class MenuFragment extends Fragment {
 
 	Button mStartGameButton;
+	Button mHighscoreButton;;
 
 	public MenuFragment() {
 		// TODO Auto-generated constructor stub
@@ -31,10 +34,38 @@ public class MenuFragment extends Fragment {
 		mStartGameButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
-			public void onClick(View view) {
-			
+			public void onClick(View view) { 
 				//Intent openGameIntent = new Intent(GameMenuActivity.this,PojoGameActivity.class);
 				//startActivity(openGameIntent);
+        FragmentManager fm = getFragmentManager();
+        Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
+        if(frag == null)
+        {
+        	frag = new PlayFragment();
+        	fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
+        }
+
+			}
+		}); 
+
+		mHighscoreButton = (Button)v.findViewById(R.id.highScoreButton);
+		
+		mHighscoreButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View view) { 
+				//Intent openGameIntent = new Intent(GameMenuActivity.this,PojoGameActivity.class);
+				//startActivity(openGameIntent);
+				FragmentManager fm = getFragmentManager();
+				Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
+				if(frag == null)
+				{
+					frag = new HighscoreFragment();
+					FragmentTransaction trans =  fm.beginTransaction();
+					trans.addToBackStack(null);
+					trans.replace(R.id.fragmentContainer, frag).commit(); 
+				}
+
 			}
 		}); 
 

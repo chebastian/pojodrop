@@ -75,6 +75,11 @@ class MainGameThread extends Thread {
 		GameLoop();
 	}
 
+	public void stopRunning()
+	{
+		setRunnint(false);
+	}
+
 	public void setRunnint(boolean r)
 	{
 		mRunning = r;
@@ -180,8 +185,9 @@ class MainGameThread extends Thread {
 	
 	public void clearGameScreen(Canvas g,int color)
 	{
-		Paint p = new Paint();
+		/*Paint p = new Paint();
 		p.setColor(color);
-		g.drawRect(new Rect(0,0,g.getWidth(),g.getHeight()), p); 
+		g.drawRect(new Rect(0,0,g.getWidth(),g.getHeight()), p); */
+		g.drawColor(color);
 	}
 }

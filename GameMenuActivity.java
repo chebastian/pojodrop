@@ -12,6 +12,8 @@ public class GameMenuActivity extends Activity {
 
 	Button mHighScoreButton;
 	Button mStartGameButton;
+	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -27,20 +29,10 @@ public class GameMenuActivity extends Activity {
 				startActivity(openHighscoreIntent);
 			}
 		});*/
-		
-		
-		mStartGameButton = (Button)findViewById(R.id.startGameButton);
-		
-		mStartGameButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-			
-				Intent openGameIntent = new Intent(GameMenuActivity.this,PojoGameActivity.class);
-				startActivity(openGameIntent);
-			}
-		}); 
-	}
+
+
+
+		}
 	
 	protected void onResume()
 	{

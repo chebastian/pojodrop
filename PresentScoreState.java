@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Canvas;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
@@ -27,34 +29,17 @@ public class PresentScoreState extends State {
 	
 	public void OnEnter(GameView view)
 	{
-		view.setOnTouchListener(new OnTouchListener() {
-			
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				// TODO Auto-generated method stub
-				mGame.changeState(new QuickPlayState(mGame));
-				return true;
-			}
-		});
-		
-		mRetryButton = new Button(mGame.getView().getContext());
-		mRetryButton.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
-		mRetryButton.setText("RETRY?");
-	
-		LinearLayout layout = new LinearLayout(mGame.getView().getContext());
-		layout.addView(mRetryButton);
-		
-		ServerInterface server = new ServerInterface();
-		String str = server.getServerList();
-		server.addScore("personA",mGame.getScoreTracker().getScore());
-		
-		String list = server.getServerList();
-		list = list;
+		PojoGameActivity ac = (PojoGameActivity)mGame.getView().getContext();
+		FragmentManager fm = ac.getFragmentManager();
+		Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
+		frag = new PresentScoreFragment(mGame);
+		fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
+		//server.addScore("personA",mGame.getScoreTracker().getScore()); 
 	}
 	
 	public void Render(Canvas g)
 	{
-		g.drawText("Your score was: " + mGame.getScoreTracker().getScore(), mScorePos.x, mScorePos.y, mScoreTextPaint);
+		//g.drawText("Your score was: " + mGame.getScoreTracker().getScore(), mScorePos.x, mScorePos.y, mScoreTextPaint);
 	}
 
 }

@@ -16,18 +16,20 @@ public class PojoGame {
 	State mCurrentState;
 	PuzzleField mField;
 	int mFieldWidth, mFieldHeight;
+	PlayerAccount mCurrentAccount;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
 		mView = view;
 		mTimeScale = 1.0f;
-		mPlayTime = 10.0f;
+		mPlayTime = 20.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
 		mFieldWidth = 6;
 		mFieldHeight  = 13;
 		mLevel = 3; 
 		resetActiveField();
+		mCurrentAccount = new PlayerAccount("ApplicationSebastian");
 		changeState(new QuickPlayState(this)); 
 	}
 	
@@ -97,5 +99,15 @@ public class PojoGame {
 	public PuzzleField getActiveField()
 	{
 		return mField;
+	}
+	
+	public String playerName()
+	{
+		return mCurrentAccount.Name();
+	}
+
+	public void setplayerName(String name)
+	{
+		
 	}
 }

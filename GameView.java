@@ -45,8 +45,8 @@ public class GameView extends SurfaceView {
 	
 	public GameView(Context context) {
 		super(context);
-		mGame = new PojoGame(this);
 		mEntityManager = new EntityManager();
+		mGame = new PojoGame(this);
 		mThread = new MainGameThread(this,mGame);
 		mEffectMgr = new EffectManager(this); 
 		mHolder = this.getHolder();
@@ -164,5 +164,10 @@ public class GameView extends SurfaceView {
 		index = scX / (PuzzleBlock.BLOCK_W * mCanvasScaleValue);
 		
 		return (int)index; 
+	}
+	
+	public PojoGame getGame()
+	{
+		return mGame;
 	}
 }
