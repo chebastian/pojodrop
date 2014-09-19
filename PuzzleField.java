@@ -132,8 +132,7 @@ public class PuzzleField extends RenderableEntity {
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
 			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.5f));
 			//mGame.getView().getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
-			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f));
-			
+			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f)); 
 		}
 	}
 	
