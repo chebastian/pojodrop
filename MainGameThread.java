@@ -161,6 +161,7 @@ class MainGameThread extends Thread {
 		mGameTime += time;
 		mGame.setTimeScale(mGameTime / SESSION_PLAY_TIME );
 		
+		mGame.update(time);
 		mGame.currentState().Update(time);
 	}
 

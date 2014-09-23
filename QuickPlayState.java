@@ -6,13 +6,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.util.Log;
 
-public class QuickPlayState extends State {
+public class QuickPlayState extends State implements GameMessageListener{
 
 	PuzzleField Field;
 	float mPlayTime;
 	Paint mTextPaint;
 	PlaytimeBar mTimeBar;
+	static final String TAG = "PLAYSTATE";
 	
 	public QuickPlayState(PojoGame game) {
 		super(game);
@@ -29,6 +31,7 @@ public class QuickPlayState extends State {
 		mPlayTime = mGame.getPlayTime();
 		mTimeBar = new PlaytimeBar(0, new Point(300,100), 100, (int)mPlayTime);
 		mGame.getView().entityManager().addEntity(mTimeBar);
+		mGame.MessageManager().addListener(this);
 
 		mGame.getView().setOnTouchListener(new SwipeListener(mGame.getView().getContext(),mGame){
 			public void onSwipeLeft(){
@@ -74,6 +77,20 @@ public class QuickPlayState extends State {
 				
 			}
 		}); 
+		
+		
+		/*mGame.getView().setOnTouchListener(new BlockTouchListener(mGame.getView()){
+			public void onDragLeft(){
+				if(mGame.getActiveField().CanMoveActiveBlockInDirection(-1))
+					mGame.getActiveField().MoveActiveBlock(-PuzzleBlock.BLOCK_W, 0);
+			}
+			
+			public void onDragRight(){
+				if(mGame.getActiveField().CanMoveActiveBlockInDirection(1))
+					mGame.getActiveField().MoveActiveBlock(PuzzleBlock.BLOCK_W, 0);
+			}
+			
+		});*/
 	}
 	
 	public void Update(float time)
@@ -85,18 +102,20 @@ public class QuickPlayState extends State {
 			mTimeBar.setActive(true);
 		else
 			mTimeBar.setActive(false);
+		
+		if(mGame.getActiveField().blocksWereFaded())
+			mTimeBar.increaseTime(2.0f);
 
 		if(gameIsOver()){
 			mGame.mView.mThread.setRunnint(false);
-			mGame.changeState(new PresentScoreState(mGame));
-
+			mGame.changeState(new PresentScoreState(mGame)); 
 		}
 	}
 	
 	public void Render(Canvas g)
 	{
 		mGame.getActiveField().render(g);
-		renderCountDown(g);
+	//	renderCountDown(g);
 		mGame.getActiveField().getQueue().renderAt(g, new Point(164,0));
 		Paint p = new Paint();
 		p.setTextSize(20.0f);
@@ -121,6 +140,13 @@ public class QuickPlayState extends State {
 
 	public void OnExit(GameView game)
 	{
+		
+	}
+
+	@Override
+	public void onMessage(GameMessage msg) {
+		// TODO Auto-generated method stub
+		Log.d(TAG, msg.toString());
 		
 	}
 

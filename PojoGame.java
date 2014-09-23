@@ -17,9 +17,11 @@ public class PojoGame {
 	PuzzleField mField;
 	int mFieldWidth, mFieldHeight;
 	PlayerAccount mCurrentAccount;
+	GameMessageManager mMessageManager;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
+		mMessageManager = new GameMessageManager();
 		mView = view;
 		mTimeScale = 1.0f;
 		mPlayTime = 20.0f;
@@ -57,7 +59,8 @@ public class PojoGame {
 	
 	public void update(float time)
 	{
-		currentState().Update(time);
+		mMessageManager.update();
+//		currentState().Update(time);
 	}
 
 	public float getPlayTime()
@@ -109,5 +112,10 @@ public class PojoGame {
 	public void setplayerName(String name)
 	{
 		
+	}
+	
+	public GameMessageManager MessageManager()
+	{
+		return mMessageManager;
 	}
 }

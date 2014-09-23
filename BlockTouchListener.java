@@ -14,12 +14,12 @@ public class BlockTouchListener implements OnTouchListener {
 	protected float mOriginX;
 	protected float mElapsedTime;
 	protected float mLastTime;
-	protected GameView mGame;
+	protected GameView mView;
 	
 	public BlockTouchListener(GameView game) {
 		// TODO Auto-generated constructor stub
 		mLastX = 0.0f;
-		mGame = game;
+		mView = game;
 		mOriginX = 0.0f;
 		mElapsedTime = 0.0f;
 		mLastTime = 0.0f;
@@ -40,47 +40,52 @@ public class BlockTouchListener implements OnTouchListener {
 	@Override
 	public boolean onTouch(View v, MotionEvent event) 
 	{
-		boolean result = false;
-		int action = event.getAction();
-		float newX = event.getX();
-		
-		int colX = mGame.screenToCollumnIndex((int)event.getRawX());
-		Log.d("collumnX",""+colX);
+		boolean result = true;
 
-
-		float rawY = event.getRawY();
-		float lastX = mLastX;
-		long dt = event.getDownTime();
-		Log.d("","dt"+dt);
-		float t = System.currentTimeMillis();
-		
-		//THE FIRST PRESS ON THE SCREEN
-		if(action == MotionEvent.ACTION_DOWN){ 			
-			mOriginX = event.getX(); 
-			mLastTime = t;
-			mElapsedTime = 0.0f;
-			return true;
-		}
-
-		//ANY MOVE THAT HAPPENS AFTER THE ACTION DOWN
-		if(action == MotionEvent.ACTION_MOVE && rawY > mGame.getHeight()*0.8)
+		switch(event.getAction())
 		{
-			float dx = newX - lastX; 
-			Log.d("dist of drag: ", ""+dx);
-			setColumnValue(colX);
-			if(Math.abs(dx)  > DRAG_MIN_X_DIST){
-
-				if(dx > 0)
-					onDragRight();
-				else
-					onDragLeft(); 
-
-				result = true; 
-			}
+		case MotionEvent.ACTION_DOWN:
+		{
+			Log.d("touch",""+event.getX());
+			mOriginX = event.getX();
+			mLastX = event.getX();
+			break;
 		}
-		
-		mLastX = newX;
-		mLastTime = t;
+
+		case MotionEvent.ACTION_MOVE:
+		{
+			float newX = event.getX();
+			float d = mOriginX - newX;
+			float oldD = mLastX - newX;
+			
+			int w = mView.getWidth();
+			int wstep = w / 6;
+			
+			if(Math.abs(d) > wstep)
+			{
+				if(d < 0)
+					this.onDragRight();
+				else
+					this.onDragLeft();
+				
+				mOriginX = newX;
+			}
+
+			int step = (int) (d % wstep);
+			int oldStep = (int) (oldD % wstep);
+			
+			mLastX = newX;
+
+			break;
+		}
+
+		case MotionEvent.ACTION_UP:
+		{
+			Log.d("","");
+			break;
+		}
+		}
+
 		return result;
 	}
 

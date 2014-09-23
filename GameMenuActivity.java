@@ -15,24 +15,12 @@ public class GameMenuActivity extends Activity {
 	
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState) 
+	{
 		super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game_menu);
-		mHighScoreButton = (Button)findViewById(R.id.highScoreButton);
-		
-/*		mHighScoreButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View view) {
-			
-				Intent openHighscoreIntent = new Intent(GameMenuActivity.this,HighscoreActivity.class);
-				startActivity(openHighscoreIntent);
-			}
-		});*/
-
-
-
-		}
+		setContentView(R.layout.activity_game_menu);
+		mHighScoreButton = (Button)findViewById(R.id.highScoreButton); 
+	}
 	
 	protected void onResume()
 	{

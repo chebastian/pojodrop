@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
+import com.example.pojodrop.GameMessage.GameEvents;
+
 import android.graphics.Canvas;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -31,6 +33,7 @@ public class PuzzleField extends RenderableEntity {
 	BlockQueue mBlockQueue;
 	
 	boolean mNeedToUpdate;
+	boolean mBlocksWereFaded;
 	
 	public PuzzleField(int w, int h)
 	{
@@ -54,6 +57,7 @@ public class PuzzleField extends RenderableEntity {
 		
 		mField = new BlockField(w, h);
 		mNeedToUpdate = false;
+		mBlocksWereFaded = false;
 	}
 	
 	public void init(PojoGame game)
@@ -82,7 +86,6 @@ public class PuzzleField extends RenderableEntity {
 		}
 
 		
-
 		updateBlocksInField(time);
 		
 		boolean blocksHasGoneIdle = mLastTimeNeed && !hasBlockInState(DroppState.DroppStateID);
@@ -122,6 +125,7 @@ public class PuzzleField extends RenderableEntity {
 			}
 		}
 		
+		mBlocksWereFaded = false;
 		if(hasACombo)
 		{
 			mGame.getScoreTracker().increaseComboCounter();
@@ -131,9 +135,16 @@ public class PuzzleField extends RenderableEntity {
 			}
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
 			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.5f));
+			mBlocksWereFaded = true;
+			mGame.MessageManager().addEvent(new GameMessage(GameEvents.BLOCK_START_FADE));
 			//mGame.getView().getEffectMgr().addEffect(new ScreenShake(mGame, 0.3f, 0.5f));
 			//mGame.getEffectMgr().addEffect(new ScreenShake(mGame, 0.5f, -1.2f)); 
 		}
+	}
+	
+	public boolean blocksWereFaded()
+	{
+		return mBlocksWereFaded;
 	}
 	
 	public boolean hasFadingBlocks()
@@ -421,8 +432,9 @@ public class PuzzleField extends RenderableEntity {
         PositionBlockAtCollumnTop(block, col);
 		
 		AddBlockInMap(block);
+		block.ChangeState(new IdleState(block));
 		
-		HandleBlockClustering(block);
+		//HandleBlockClustering(block);
 	}
 	
 	public boolean BlockReachedBottom(PuzzleBlock block)
@@ -581,7 +593,7 @@ public class PuzzleField extends RenderableEntity {
 		for(int i = 0; i < ActiveBlock.size(); i++)
 		{
 			PuzzleBlock b = ActiveBlock.get(i);
-			b.ChangeState(new IdleState(b));
+			//b.ChangeState(new IdleState(b));
 			AddBlockToBottom(b);
 		} 
 		ActiveBlock.clear();
