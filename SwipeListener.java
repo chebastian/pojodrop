@@ -28,6 +28,11 @@ public class SwipeListener implements OnTouchListener{
 			{
 				onSwipeRight();
 			}
+			
+			public void onDragUp()
+			{
+				onSwipeUp();
+			}
 		};
 	}
 
@@ -147,7 +152,9 @@ public class SwipeListener implements OnTouchListener{
 					if(Math.abs(dy) > SWIPE_TRESHOLD && Math.abs(velY) > SWIPE_VELOCITY_TRESHOLD)
 					{
 						if(dy > 0)
-							onSwipeUp();
+						{
+							//onSwipeUp(); 
+						}
 						else
 							onSwipeDown();
 					}

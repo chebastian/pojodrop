@@ -13,6 +13,7 @@ public class FieldLogger {
 	ArrayList<String> mMessageLog;
 	ArrayList<String> mFieldSnaps;
 	int SNAPS_MAX_SIZE = 10;
+	String DELIMITER = " | ";
 	public FieldLogger() {
 		// TODO Auto-generated constructor stub
 		mMessageLog = new ArrayList<String>();
@@ -23,8 +24,8 @@ public class FieldLogger {
 	{
 		String res = "";
 		Date d = new Date();
-		res += "time: " + d.getTime() + " | ";
-		res += msg + " | ";
+		res += "time: " + d.getTime() + DELIMITER;
+		res += msg + DELIMITER;
 		mMessageLog.add(res); 
 		
 		Log.d("",res);

@@ -11,6 +11,7 @@ public class GameMessage {
 		BLOCK_START_FADE("BLOCK START FADE"),
 		BLOCK_DONE_FADE("BLOCK DONE FADE"),
 		COMBO_ACTIVATED("COMBO START"),
+		FIELD_CLEARED("FIELD CLEARED"),
 		COMBO_DONE("COMBO DONE");
 
         private final String mName;

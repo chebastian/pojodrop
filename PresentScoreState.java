@@ -34,12 +34,6 @@ public class PresentScoreState extends State {
 		Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
 		frag = new PresentScoreFragment(mGame);
 		fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
-		//server.addScore("personA",mGame.getScoreTracker().getScore()); 
-	}
-	
-	public void Render(Canvas g)
-	{
-		//g.drawText("Your score was: " + mGame.getScoreTracker().getScore(), mScorePos.x, mScorePos.y, mScoreTextPaint);
-	}
+	} 
 
 }

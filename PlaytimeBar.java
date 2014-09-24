@@ -23,7 +23,7 @@ public class PlaytimeBar extends RenderableEntity {
 		mElapsedTime = 0.0f;
 
 		mBarPaint = new Paint();
-		mBarPaint.setColor(Color.WHITE);
+		mBarPaint.setColor(Color.RED);
 		mInactiveBarPaint = new Paint();
 		mInactiveBarPaint.setColor(Color.GRAY); 
 		

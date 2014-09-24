@@ -16,13 +16,11 @@ public class PresentScoreFragment extends Fragment {
 	PojoGame mGame;
 
 	public PresentScoreFragment(PojoGame game) {
-		// TODO Auto-generated constructor stub
 		mGame = game;
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstance)
 	{
-		//super.onCreateView(inflater, parent, savedInstance);
 		View v = inflater.inflate(R.layout.fragment_present_score, parent, false);
 
 		mRetryButton = (Button)v.findViewById(R.id.retryButton);
@@ -55,7 +53,6 @@ public class PresentScoreFragment extends Fragment {
 					trans.replace(R.id.fragmentContainer, frag);
 					trans.addToBackStack(null);
 					trans.commit();
-					//fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
 				} 
 			}
 		}); 

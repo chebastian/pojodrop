@@ -10,7 +10,7 @@ import android.view.View.OnTouchListener;
 public class BlockTouchListener implements OnTouchListener {
 
 	private final int DRAG_MIN_X_DIST = 5;
-	protected float mLastX;
+	protected float mLastY;
 	protected float mOriginX;
 	protected float mElapsedTime;
 	protected float mLastTime;
@@ -18,7 +18,6 @@ public class BlockTouchListener implements OnTouchListener {
 	
 	public BlockTouchListener(GameView game) {
 		// TODO Auto-generated constructor stub
-		mLastX = 0.0f;
 		mView = game;
 		mOriginX = 0.0f;
 		mElapsedTime = 0.0f;
@@ -30,6 +29,11 @@ public class BlockTouchListener implements OnTouchListener {
 	}
 	
 	public void onDragRight(){
+		
+	}
+	
+	public void onDragUp()
+	{
 		
 	}
 	
@@ -48,15 +52,31 @@ public class BlockTouchListener implements OnTouchListener {
 		{
 			Log.d("touch",""+event.getX());
 			mOriginX = event.getX();
-			mLastX = event.getX();
+			mLastY = event.getY();
 			break;
 		}
 
 		case MotionEvent.ACTION_MOVE:
 		{
+			handleXMovement(event);
+			handleYMovement(event);
+			break;
+		}
+
+		case MotionEvent.ACTION_UP:
+		{
+			Log.d("","");
+			break;
+		}
+		}
+
+		return result;
+	}
+	
+	protected void handleXMovement(MotionEvent event)
+	{
 			float newX = event.getX();
 			float d = mOriginX - newX;
-			float oldD = mLastX - newX;
 			
 			int w = mView.getWidth();
 			int wstep = w / 6;
@@ -70,23 +90,24 @@ public class BlockTouchListener implements OnTouchListener {
 				
 				mOriginX = newX;
 			}
-
-			int step = (int) (d % wstep);
-			int oldStep = (int) (oldD % wstep);
+	}
+	
+	protected void handleYMovement(MotionEvent event)
+	{
+			float newY = event.getY();
+			float d = mLastY - newY;
 			
-			mLastX = newX;
+			int h = mView.getHeight();
+			int hstep = h / 20;
+			
+			if(Math.abs(d) > hstep)
+			{
+				if(d > 0)
+					this.onDragUp();
+				
+				mLastY = newY;
+			}
 
-			break;
-		}
-
-		case MotionEvent.ACTION_UP:
-		{
-			Log.d("","");
-			break;
-		}
-		}
-
-		return result;
 	}
 
 }

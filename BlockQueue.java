@@ -72,7 +72,7 @@ public class BlockQueue {
 		Point renderPos = new Point(pos.x,pos.y);
 		g.drawText("Next: ", pos.x, pos.y + textMarginBottom, mPaint);
 		
-		for(int i = mBlocks.size()-1; i > mBlocks.size()-mPreviewLength; i--)
+		for(int i = mBlocks.size()-1; i >= mBlocks.size()-mPreviewLength; i--)
 		{
 			renderPos.y += PuzzleBlock.BLOCK_H; 
 			PuzzleBlock block = mBlocks.get(i);

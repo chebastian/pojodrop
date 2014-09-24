@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import com.example.pojodrop.GameMessage.GameEvents;
+
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.Canvas;
@@ -103,8 +105,8 @@ public class QuickPlayState extends State implements GameMessageListener{
 		else
 			mTimeBar.setActive(false);
 		
-		if(mGame.getActiveField().blocksWereFaded())
-			mTimeBar.increaseTime(2.0f);
+/*			if(mGame.getActiveField().blocksWereFaded())
+			mTimeBar.increaseTime(2.0f);*/
 
 		if(gameIsOver()){
 			mGame.mView.mThread.setRunnint(false);
@@ -147,7 +149,8 @@ public class QuickPlayState extends State implements GameMessageListener{
 	public void onMessage(GameMessage msg) {
 		// TODO Auto-generated method stub
 		Log.d(TAG, msg.toString());
-		
+		if(msg.getEventType() == GameEvents.BLOCK_START_FADE)
+			mTimeBar.increaseTime(2.0f);
 	}
 
 }

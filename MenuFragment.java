@@ -35,15 +35,13 @@ public class MenuFragment extends Fragment {
 			
 			@Override
 			public void onClick(View view) { 
-				//Intent openGameIntent = new Intent(GameMenuActivity.this,PojoGameActivity.class);
-				//startActivity(openGameIntent);
-        FragmentManager fm = getFragmentManager();
-        Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
-        if(frag == null)
-        {
-        	frag = new PlayFragment();
-        	fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
-        }
+				FragmentManager fm = getFragmentManager();
+				Fragment frag = null;
+				if(frag == null)
+				{
+					frag = new PlayFragment();
+					fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
+				}
 
 			}
 		}); 
@@ -54,10 +52,8 @@ public class MenuFragment extends Fragment {
 			
 			@Override
 			public void onClick(View view) { 
-				//Intent openGameIntent = new Intent(GameMenuActivity.this,PojoGameActivity.class);
-				//startActivity(openGameIntent);
 				FragmentManager fm = getFragmentManager();
-				Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
+				Fragment frag = null;
 				if(frag == null)
 				{
 					frag = new HighscoreFragment();

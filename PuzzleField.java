@@ -611,8 +611,12 @@ public class PuzzleField extends RenderableEntity {
 		if(mNextRot >= dirs.length)
 			mNextRot = 0;
 			
-		if(!CanMoveActiveBlockInDirection(dirs[mNextRot].x))
-			return;
+		int xdir = dirs[mNextRot].x;
+		if(!CanMoveActiveBlockInDirection(xdir))
+		{
+			if(CanMoveActiveBlockInDirection(-xdir))
+				MoveActiveBlock(-xdir*PuzzleBlock.BLOCK_W, 0);
+		}
 
 		mCurrentRot++;
 		
