@@ -1,8 +1,13 @@
 package com.example.pojodrop;
 
+import java.security.spec.MGF1ParameterSpec;
+
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -10,11 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class MenuFragment extends Fragment {
 
 	Button mStartGameButton;
-	Button mHighscoreButton;;
+	Button mHighscoreButton;
+	AlertDialog.Builder mInputNameDialog;
 
 	public MenuFragment() {
 		// TODO Auto-generated constructor stub
@@ -35,6 +42,7 @@ public class MenuFragment extends Fragment {
 			
 			@Override
 			public void onClick(View view) { 
+				mInputNameDialog.show();
 				FragmentManager fm = getFragmentManager();
 				Fragment frag = null;
 				if(frag == null)
@@ -64,6 +72,29 @@ public class MenuFragment extends Fragment {
 
 			}
 		}); 
+			
+		mInputNameDialog = new AlertDialog.Builder(v.getContext());
+		mInputNameDialog.setTitle("Enter your name");
+		mInputNameDialog.setMessage("Whats your name");
+
+		final EditText input = new EditText(v.getContext());
+		mInputNameDialog.setView(input);
+
+		mInputNameDialog.setPositiveButton("OK", new DialogInterface.OnClickListener(){
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			} 
+		});
+		
+		mInputNameDialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 		return v;
 	}

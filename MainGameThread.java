@@ -22,7 +22,7 @@ class MainGameThread extends Thread {
 	private PojoGame mGame;
 
 	float x = 0; 
-	int DESIRED_FPS = 60;
+	int DESIRED_FPS = 30;
 	int SKIPPED_TICKS = 1000 / DESIRED_FPS;
 	int MAX_SKIPPED = 10;
 	float MAX_FPS = 1.0f / 30.0f;

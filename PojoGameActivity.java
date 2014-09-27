@@ -1,5 +1,7 @@
 package com.example.pojodrop;
 
+import java.security.spec.MGF1ParameterSpec;
+
 import com.example.pojodrop.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -47,6 +49,8 @@ public class PojoGameActivity extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+    
+    protected PojoGame mGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

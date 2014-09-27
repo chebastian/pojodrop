@@ -138,17 +138,6 @@ public class GameView extends SurfaceView {
 	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
-		int mask = event.getActionMasked();
-		switch(mask)
-		{
-			case MotionEvent.ACTION_MOVE:
-				break;
-			case MotionEvent.ACTION_DOWN:
-				break;
-			case MotionEvent.ACTION_UP:
-				break;
-			
-		}
 		return super.onTouchEvent(event);
 	}
 	public EffectManager getEffectMgr()

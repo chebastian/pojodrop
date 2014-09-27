@@ -79,7 +79,7 @@ public class PuzzleBlock extends RenderableEntity{
 		mSpeedScale = 1.0f;
 		CurrentState = new FallingState(this);
 		mPaint = new Paint();
-		//mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.OUTER));
+		//mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.SOLID));
 		mNumNeigbours = 0;
 	}
 	
@@ -121,12 +121,13 @@ public class PuzzleBlock extends RenderableEntity{
 		
 		mPaint.setColor(Colour);
 		mPaint.setStyle(Paint.Style.FILL);
-		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
+//		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
+		g.drawCircle(drawX, drawY, Scale*(int)(BLOCK_W*0.5), mPaint);
 		
-		/*mPaint.setColor((int)(Colour - Colour*0.1));
-		mPaint.setStyle(Paint.Style.STROKE);
-		mPaint.setStrokeWidth(2+(2*num));
-		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);*/
+		//mPaint.setColor((int)(Colour - Colour*0.1));
+		//mPaint.setStyle(Paint.Style.STROKE);
+		//mPaint.setStrokeWidth(2+(2*num));
+		//g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);*/
 		CurrentState.render(g);
 	}
 	
