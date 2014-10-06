@@ -42,6 +42,7 @@ public class GameView extends SurfaceView {
 	EffectManager mEffectMgr;
 	EntityManager mEntityManager;
 	PojoGame mGame;
+	private String TAG = "GameView";
 	
 	public GameView(PojoGameActivity context) {
 		super(context);
@@ -59,7 +60,9 @@ public class GameView extends SurfaceView {
 				boolean tryAgain = true;
 				while(tryAgain){
 					try {
+						Log.d(TAG,"trying to join thread");
 						mThread.join();
+						Log.d(TAG,"Thread is joined");
 						tryAgain = false;
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block

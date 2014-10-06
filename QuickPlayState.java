@@ -111,8 +111,10 @@ public class QuickPlayState extends State implements GameMessageListener{
 
 		if(gameIsOver()){
 			Log.d(TAG, "game is over");
-			mGame.mView.mThread.setRunnint(false);
+			Log.d(TAG,"Changing state");
 			mGame.changeState(new PresentScoreState(mGame)); 
+			Log.d(TAG,"Stopping thread");
+			mGame.mView.mThread.setRunnint(false);
 		}
 	}
 	

@@ -57,7 +57,7 @@ public class MenuFragment extends Fragment {
 				if(frag == null)
 				{
 					frag = new PlayFragment();
-					fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
+					fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
 				}
 
 			}
@@ -74,7 +74,6 @@ public class MenuFragment extends Fragment {
 				{
 					frag = new HighscoreFragment(mGame);
 					FragmentTransaction trans =  fm.beginTransaction();
-					trans.addToBackStack(null);
 					trans.replace(R.id.fragmentContainer, frag).commit(); 
 				}
 

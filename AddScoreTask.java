@@ -5,10 +5,12 @@ import android.os.AsyncTask;
 
 public class AddScoreTask extends AsyncTask<String, String, String> {
 
-	PojoGame mGame;
-	public AddScoreTask(PojoGame game)
+	String mNameToAdd;
+	int mScoreToAdd;
+	public AddScoreTask(String name, int score)
 	{
-		mGame = game;
+		mNameToAdd = name;
+		mScoreToAdd = score;
 	}
 	@Override
 	protected String doInBackground(String... arg0) {
@@ -18,11 +20,13 @@ public class AddScoreTask extends AsyncTask<String, String, String> {
 
 		String url_str =  Uri.parse(server.SERVER_URL).buildUpon()
 				.appendQueryParameter("command", "addNewScore")
-				.appendQueryParameter("name", mGame.playerName())
-				.appendQueryParameter("score", Integer.toString(mGame.getScoreTracker().getScore()))
+				.appendQueryParameter("name", mNameToAdd)
+				.appendQueryParameter("score", Integer.toString(mScoreToAdd))
 				.build().toString(); 
 		
-		return server.sendClientRequest(url_str); 
+		String result = server.sendClientRequest(url_str);
+		
+		return result; 
 	}
 
 }

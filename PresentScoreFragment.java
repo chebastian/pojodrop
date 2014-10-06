@@ -3,6 +3,7 @@ package com.example.pojodrop;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ public class PresentScoreFragment extends Fragment {
 	Button mRetryButton;
 	Button mViewHighscoreButton;
 	PojoGame mGame;
+	String TAG = "PresentScore";
+
 
 	public PresentScoreFragment(PojoGame game) {
 		mGame = game;
@@ -22,8 +25,10 @@ public class PresentScoreFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstance)
 	{
 		View v = inflater.inflate(R.layout.fragment_present_score, parent, false);
+		Log.d(TAG,"entered present score");
 
 		mRetryButton = (Button)v.findViewById(R.id.retryButton);
+
 
 		mRetryButton.setOnClickListener(new View.OnClickListener() 
 		{
@@ -58,15 +63,15 @@ public class PresentScoreFragment extends Fragment {
 
 		
 		TextView text = (TextView)v.findViewById(R.id.player_score);
-		text.append(" " + Integer.toString(mGame.getScoreTracker().getScore()));
-		
+		text.append(" " + Integer.toString(mGame.getScoreTracker().getScore())); 
+
 		sendScoreToServer();
 		return v;
 	}
 	
 	public void sendScoreToServer()
 	{
-		AddScoreTask task = new AddScoreTask(mGame);
+		AddScoreTask task = new AddScoreTask(mGame.getPlayerAccount().Name(),mGame.getScoreTracker().getScore());
 		task.execute();
 	}
 
