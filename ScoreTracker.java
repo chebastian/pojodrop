@@ -49,6 +49,12 @@ public class ScoreTracker {
 		return mScore;
 	}
 	
+	public void reset()
+	{
+		mScore = 0;
+		mComboCounter = 0;
+	}
+	
 	
 
 }

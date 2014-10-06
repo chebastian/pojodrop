@@ -43,10 +43,11 @@ public class GameView extends SurfaceView {
 	EntityManager mEntityManager;
 	PojoGame mGame;
 	
-	public GameView(Context context) {
+	public GameView(PojoGameActivity context) {
 		super(context);
 		mEntityManager = new EntityManager();
-		mGame = new PojoGame(this);
+		mGame = context.mGame;
+		mGame.startGame(this);
 		mThread = new MainGameThread(this,mGame);
 		mEffectMgr = new EffectManager(this); 
 		mHolder = this.getHolder();
@@ -119,10 +120,8 @@ public class GameView extends SurfaceView {
 		super.onDraw(canvas);
 		float sz  = getScaleValue(canvas);
 		float x = (float)Math.random();
-		//canvas.translate(10*x, 0);
 		
 		mEffectMgr.renderEffects(canvas);
-		//canvas.skew(0.2f, 0.5f);
 		canvas.scale(sz, sz);
 	}
 	

@@ -57,13 +57,14 @@ public class PojoGameActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_pojo_game);
+        mGame = new PojoGame(null);
         //setContentView(new GameView(this));
         FragmentManager fm = getFragmentManager();
         Fragment frag = fm.findFragmentById(R.id.fragmentContainer);
         
         if(frag == null)
         {
-        	frag = new MenuFragment();
+        	frag = new MenuFragment(mGame);
         	fm.beginTransaction().add(R.id.fragmentContainer, frag).commit();
         }
         //setContentView(R.layout.activity_game_menu);

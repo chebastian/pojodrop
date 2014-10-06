@@ -20,8 +20,12 @@ public class HighscoreFragment extends Fragment {
 	Button mBackButton;
 	TextView mServerResponse;
 	String serverString;
-	public HighscoreFragment() {
+	PojoGame mGame;
+	GetServerListTask mServerListTask;
+
+	public HighscoreFragment(PojoGame game) {
 		serverString = "no response...";
+		mGame = game;
 	}
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstance)
@@ -41,7 +45,7 @@ public class HighscoreFragment extends Fragment {
 				Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
 				if(frag == null)
 				{
-					frag = new MenuFragment();
+					frag = new MenuFragment(mGame);
 					fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
 				} 
 			}
@@ -53,11 +57,18 @@ public class HighscoreFragment extends Fragment {
 	public void onResume()
 	{
 		super.onResume();
-		GetServerListTask lst = new GetServerListTask(serverString)
+		//GetServerListTask lst = new GetServerListTask(serverString)
+		mServerListTask = new GetServerListTask(serverString)
 		{
 			public void myPostExecute(String res)
 			{
 				//mServerResponse.setText(res);
+				if(this == null)
+					return;
+				
+				if(mIsReleased)
+					return;
+
 				ArrayAdapter<HighscoreItem> items = new ArrayAdapter<HighscoreItem>(getActivity(), R.layout.simple_list_item_1,
 						mHighscore);
 				
@@ -65,9 +76,15 @@ public class HighscoreFragment extends Fragment {
 				view.setAdapter(items);
 			}
 		};
-		lst.execute("");
+		mServerListTask.execute("");
 		
 		serverString = serverString;
+	}
+	
+	public void onStop()
+	{
+		mServerListTask.release();
+		super.onStop();
 	}
 
 }

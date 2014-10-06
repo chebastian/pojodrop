@@ -48,10 +48,9 @@ public class PresentScoreFragment extends Fragment {
 				Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
 				if(frag == null)
 				{
-					frag = new HighscoreFragment();
+					frag = new HighscoreFragment(mGame);
 					FragmentTransaction trans = fm.beginTransaction();
 					trans.replace(R.id.fragmentContainer, frag);
-					trans.addToBackStack(null);
 					trans.commit();
 				} 
 			}

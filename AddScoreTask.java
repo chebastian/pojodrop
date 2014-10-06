@@ -14,7 +14,7 @@ public class AddScoreTask extends AsyncTask<String, String, String> {
 	protected String doInBackground(String... arg0) {
 
 		ServerInterface server = new ServerInterface();
-		server.addScore(mGame.playerName(), mGame.getScoreTracker().getScore());
+		//server.addScore(mGame.playerName(), mGame.getScoreTracker().getScore());
 
 		String url_str =  Uri.parse(server.SERVER_URL).buildUpon()
 				.appendQueryParameter("command", "addNewScore")

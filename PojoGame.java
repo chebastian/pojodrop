@@ -18,13 +18,14 @@ public class PojoGame {
 	int mFieldWidth, mFieldHeight;
 	PlayerAccount mCurrentAccount;
 	GameMessageManager mMessageManager;
+	boolean mRunning;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
 		mMessageManager = new GameMessageManager();
 		mView = view;
 		mTimeScale = 1.0f;
-		mPlayTime = 20.0f;
+		mPlayTime = 2.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
 		mFieldWidth = 6;
@@ -32,6 +33,14 @@ public class PojoGame {
 		mLevel = 3; 
 		resetActiveField();
 		mCurrentAccount = new PlayerAccount("ApplicationSebastian");
+		mRunning = false;
+		mView = null;
+	}
+	
+	public void startGame(GameView view)
+	{
+		mView = view;
+		resetActiveField();
 		changeState(new QuickPlayState(this)); 
 	}
 	
@@ -86,6 +95,7 @@ public class PojoGame {
 	}
 	
 	public void changeState(State state){
+
 		if(mCurrentState != null){
 			mCurrentState.OnExit(getView());
 		}
@@ -111,11 +121,16 @@ public class PojoGame {
 
 	public void setplayerName(String name)
 	{
-		
+		mCurrentAccount.setName(name);
 	}
 	
 	public GameMessageManager MessageManager()
 	{
 		return mMessageManager;
+	}
+	
+	public PlayerAccount getPlayerAccount()
+	{
+		return mCurrentAccount;
 	}
 }

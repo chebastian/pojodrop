@@ -31,11 +31,15 @@ public class PuzzleBlock extends RenderableEntity{
 	public static int FallSpeed = 140;
 	protected float mSpeedScale;
 	public int mNumNeigbours;
+	protected Point mNextPosition;
+	protected Point mOriginalPosition;
+	protected float mElapsedMoveTime;
 
 	public int colors[] = {Color.GREEN,Color.BLUE,Color.RED,Color.GRAY, Color.WHITE};
 	static Random rand = new Random();
 	boolean mNeedsToFade;
 	Paint mPaint;
+
 	public PuzzleBlock(Point index, int w, int h)
 	{
 		super(0,new Rect((int)index.x*w, (int)index.y*h, w, h) );
@@ -67,8 +71,7 @@ public class PuzzleBlock extends RenderableEntity{
 		
 		int r = rand.nextInt(3);
 		Colour = colors[r];
-		Checked = false;
-		
+		Checked = false; 
 		BlockType = r;
 		NextPositonY = -1;
 		num = 0;
@@ -81,6 +84,9 @@ public class PuzzleBlock extends RenderableEntity{
 		mPaint = new Paint();
 		//mPaint.setMaskFilter(new BlurMaskFilter(2.0f, Blur.SOLID));
 		mNumNeigbours = 0;
+		mNextPosition = new Point(this.rect.left, this.rect.top);
+		mOriginalPosition = new Point(this.rect.left, this.rect.top);
+		mElapsedMoveTime = 0;
 	}
 	
 	public void SnapToPosition(int x, int y)

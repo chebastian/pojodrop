@@ -31,6 +31,7 @@ public class QuickPlayState extends State implements GameMessageListener{
 		mTextPaint.setColor(Color.WHITE);
 		
 		mPlayTime = mGame.getPlayTime();
+		mGame.getScoreTracker().reset();
 		mTimeBar = new PlaytimeBar(0, new Point(300,100), 100, (int)mPlayTime);
 		mGame.getView().entityManager().addEntity(mTimeBar);
 		mGame.MessageManager().addListener(this);
@@ -109,6 +110,7 @@ public class QuickPlayState extends State implements GameMessageListener{
 			mTimeBar.increaseTime(2.0f);*/
 
 		if(gameIsOver()){
+			Log.d(TAG, "game is over");
 			mGame.mView.mThread.setRunnint(false);
 			mGame.changeState(new PresentScoreState(mGame)); 
 		}

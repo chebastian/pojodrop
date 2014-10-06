@@ -1,6 +1,7 @@
 package com.example.pojodrop;
 
 import android.graphics.Canvas;
+import android.graphics.Point;
 import android.graphics.Rect;
 
 
@@ -60,6 +61,13 @@ public class RenderableEntity extends Entity implements Comparable<RenderableEnt
 	public int getZ()
 	{
 		return mLayerZ;
+	}
+	
+	public Point lertPoint(Point origin, Point target, float speed)
+	{
+		Point result = new Point();
+		
+		return result;
 	}
 
 	@Override

@@ -14,13 +14,13 @@ import android.util.Log;
 public class GetServerListTask extends AsyncTask<String, String, String>{
 	
 	String returnString;
-	boolean mIsDone;
+	boolean mIsReleased;
 	ArrayList<HighscoreItem> mHighscore;
 
 	public GetServerListTask(String toReturn) {
 
 		returnString = toReturn;
-		mIsDone = false;
+		mIsReleased = false;
 		mHighscore = new ArrayList<HighscoreItem>();
 	}
 
@@ -46,13 +46,17 @@ public class GetServerListTask extends AsyncTask<String, String, String>{
 	{
 		mHighscore = parseXmlFromString(object);
 		myPostExecute(object);
-		mIsDone = true;
 		returnString = object;
 		Log.d("", object);
 	}
 	
 	public void myPostExecute(String res)
 	{
+	}
+	
+	public void release()
+	{
+		mIsReleased = true;
 	}
 	
 	public ArrayList<HighscoreItem> parseXmlFromString(String xmlString)
