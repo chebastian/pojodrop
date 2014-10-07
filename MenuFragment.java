@@ -56,7 +56,7 @@ public class MenuFragment extends Fragment {
 				Fragment frag = null;
 				if(frag == null)
 				{
-					frag = new PlayFragment();
+					frag = new PlayFragment(mGame);
 					fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
 				}
 

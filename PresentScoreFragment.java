@@ -34,11 +34,14 @@ public class PresentScoreFragment extends Fragment {
 		{
 			@Override
 			public void onClick(View view) { 
+				while(!mGame.getView().mThread.hasExited()){
+					Log.d(TAG,"Waiting to quit");
+				}
 				android.app.FragmentManager fm = getFragmentManager();
 				Fragment frag = null;//fm.findFragmentById(R.id.fragmentContainer);
 				if(frag == null)
 				{
-					frag = new PlayFragment();
+					frag = new PlayFragment(mGame);
 					fm.beginTransaction().replace(R.id.fragmentContainer, frag).commit();
 				} 
 			}
@@ -65,7 +68,7 @@ public class PresentScoreFragment extends Fragment {
 		TextView text = (TextView)v.findViewById(R.id.player_score);
 		text.append(" " + Integer.toString(mGame.getScoreTracker().getScore())); 
 
-		sendScoreToServer();
+		//sendScoreToServer();
 		return v;
 	}
 	

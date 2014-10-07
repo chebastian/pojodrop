@@ -9,8 +9,9 @@ import android.view.ViewGroup;
 public class PlayFragment extends Fragment {
 
 	GameView mGameView;
-	public PlayFragment() {
-		// TODO Auto-generated constructor stub
+	PojoGame mGame;
+	public PlayFragment(PojoGame game) {
+		mGame = game;
 	}
 	
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstance)

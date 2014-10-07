@@ -34,7 +34,7 @@ public class GameView extends SurfaceView {
 		return p;
 	}
 
-	MainGameThread mThread;
+	//MainGameThread mThread;
 	int mTextWidth; 
 	SurfaceHolder mHolder;
 	
@@ -49,7 +49,8 @@ public class GameView extends SurfaceView {
 		mEntityManager = new EntityManager();
 		mGame = context.mGame;
 		mGame.startGame(this);
-		mThread = new MainGameThread(this,mGame);
+
+		//mThread = new MainGameThread(this,mGame);
 		mEffectMgr = new EffectManager(this); 
 		mHolder = this.getHolder();
 		mHolder.addCallback(new SurfaceHolder.Callback() {
@@ -58,10 +59,9 @@ public class GameView extends SurfaceView {
 			public void surfaceDestroyed(SurfaceHolder holder) {
 				// TODO Auto-generated method stub
 				boolean tryAgain = true;
-				while(tryAgain){
+				/*while(tryAgain){
 					try {
 						Log.d(TAG,"trying to join thread");
-						mThread.join();
 						Log.d(TAG,"Thread is joined");
 						tryAgain = false;
 					} catch (InterruptedException e) {
@@ -69,7 +69,7 @@ public class GameView extends SurfaceView {
 						e.printStackTrace();
 					}
 
-				}
+				}*/
 
 			}
 
@@ -77,7 +77,8 @@ public class GameView extends SurfaceView {
 			public void surfaceCreated(SurfaceHolder holder) {
 				// TODO Auto-generated method stub
 				mThread.setRunnint(true);
-				mThread.start();
+				//mThread.start();
+				mThread.execute("");
 
 			}
 

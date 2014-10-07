@@ -18,6 +18,7 @@ public class PojoGame {
 	int mFieldWidth, mFieldHeight;
 	PlayerAccount mCurrentAccount;
 	GameMessageManager mMessageManager;
+	MainGameThread mMainThread;
 	boolean mRunning;
 
 	public PojoGame(GameView view) {
@@ -34,14 +35,28 @@ public class PojoGame {
 		resetActiveField();
 		mCurrentAccount = new PlayerAccount("ApplicationSebastian");
 		mRunning = false;
-		mView = null;
+		mView = null; 
 	}
 	
 	public void startGame(GameView view)
 	{
 		mView = view;
+		if(mMainThread == null)
+		{
+			mMainThread = new MainGameThread(mView, this);
+			mMainThread.setRunnint(true);
+			mMainThread.execute("");
+		} 
+		else
+			mMainThread.setRunnint(true);
 		resetActiveField();
 		changeState(new QuickPlayState(this)); 
+	}
+	
+	public void restartGame()
+	{
+		mView.mThread = null;
+		changeState(new QuickPlayState(this));
 	}
 	
 	

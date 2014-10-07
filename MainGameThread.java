@@ -8,9 +8,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
-class MainGameThread extends Thread {
+class MainGameThread extends AsyncTask<String, String, String> {
 
 	public static final int WIN_WIDTH = 800;
 	public static final int WIN_HEIGHT = 600;
@@ -35,6 +37,8 @@ class MainGameThread extends Thread {
 	int fps = 0;
 	float mTotalTime;
 	float mGameTime;
+	String TAG = "GameThread";
+	boolean mHasExited;
 	
 	//GameState mState;
 //	QuickPlayState mState;
@@ -72,6 +76,7 @@ class MainGameThread extends Thread {
 	
 	public void run()
 	{
+		mHasExited = false;
 		GameLoop();
 	}
 
@@ -138,17 +143,30 @@ class MainGameThread extends Thread {
 			}
 			finally{
 				boolean res = true;
-				while(res != false)
-				if(mCanvas != null)
-				{ 
-					mGameView.getHolder().unlockCanvasAndPost(mCanvas);
-					res = mCanvas == null;
+				//while(res)
+				{
+					synchronized (SERIAL_EXECUTOR) {
+					}if(mCanvas != null)
+					{ 
+						mGameView.getHolder().unlockCanvasAndPost(mCanvas);
+						res = mCanvas == null;
+					}
+						
 				}
 			}
 
 			lastTime = time; 
 		}
+		
+		Log.d(TAG,"Ended main loop");
+		mHasExited = true;
 	}
+	
+	public boolean hasExited()
+	{
+		return mHasExited;
+	}
+
 
 	float seconds = 0.0f;
 	public void GameUpdate(float time)
@@ -190,5 +208,12 @@ class MainGameThread extends Thread {
 		p.setColor(color);
 		g.drawRect(new Rect(0,0,g.getWidth(),g.getHeight()), p); */
 		g.drawColor(color);
+	}
+
+	@Override
+	protected String doInBackground(String... arg0) {
+		// TODO Auto-generated method stub
+		run();
+		return null;
 	}
 }
