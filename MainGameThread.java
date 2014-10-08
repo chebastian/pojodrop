@@ -20,7 +20,7 @@ class MainGameThread extends AsyncTask<String, String, String> {
 	long lastTime = 0;
 	float elapsedTime = 0.0f;
 
-	private GameView mGameView;
+	public GameView mGameView;
 	private PojoGame mGame;
 
 	float x = 0; 
@@ -40,6 +40,8 @@ class MainGameThread extends AsyncTask<String, String, String> {
 	String TAG = "GameThread";
 	boolean mHasExited;
 	
+	boolean mIsPaused; 
+	
 	//GameState mState;
 //	QuickPlayState mState;
 
@@ -48,30 +50,12 @@ class MainGameThread extends AsyncTask<String, String, String> {
 		mGame = game;
 		mGameView = gameview;
 
+
 		lastTime = 0;
 		lastTime = System.currentTimeMillis();
 		mRunning = false;
-		/*mState = new QuickPlayState(game);
-		mState.OnEnter(game);
-		mState.Field.init(game);*/
 		mGameTime = 0.0f; 
-		
-/*		mGame.setOnTouchListener(new BlockTouchListener(mGame){
-
-			public void setColumnValue(int x){
-				if(!mState.Field.hasActiveBlocks())
-						return; 
-				
-				if(mState.Field.CanMoveActiveBlockToCollumn(x))
-				{
-					int curX = mState.Field.CollumnPosition(mState.Field.ActiveBlock.get(0));
-					int dx =  x - curX;
-					if(mState.Field.CanMoveActiveBlockInDirection(dx))
-						mState.Field.MoveActiveBlock(dx * PuzzleBlock.BLOCK_W, 0);
-					
-				}
-			}
-		});*/
+		mIsPaused = false;
 	}
 	
 	public void run()
@@ -99,6 +83,9 @@ class MainGameThread extends AsyncTask<String, String, String> {
 	{
 		while(mRunning)
 		{
+			if(mIsPaused)
+				continue;
+
 			long time = System.currentTimeMillis();
 			float elapsed = (System.currentTimeMillis() - lastTime )/ 1000.0f;
 
@@ -128,7 +115,8 @@ class MainGameThread extends AsyncTask<String, String, String> {
 			{
 				mCanvas = mGameView.getHolder().lockCanvas();
 				synchronized (mGameView.getHolder()) {
-					mGameView.draw(mCanvas);
+					if(mCanvas != null)
+						mGameView.draw(mCanvas);
 				}
 				
 				try {
@@ -139,7 +127,8 @@ class MainGameThread extends AsyncTask<String, String, String> {
 				}
 				
 				lastTime = time;
-				GameDraw(mCanvas);
+				if(mCanvas != null)
+					GameDraw(mCanvas);
 			}
 			finally{
 				boolean res = true;
@@ -215,5 +204,21 @@ class MainGameThread extends AsyncTask<String, String, String> {
 		// TODO Auto-generated method stub
 		run();
 		return null;
+	}
+	
+	public void pauseThread()
+	{
+		if(mCanvas != null)
+		{
+			synchronized (SERIAL_EXECUTOR) {
+				if(mGameView != null)
+				{ 
+					//mGameView.getHolder().unlockCanvasAndPost(mCanvas);
+				}
+			}
+
+		}
+
+		mIsPaused = true;
 	}
 }

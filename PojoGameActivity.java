@@ -105,4 +105,17 @@ public class PojoGameActivity extends Activity {
         //mHideHandler.removeCallbacks(mHideRunnable);
         //mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
+    
+    public void onPause()
+    {
+    	mGame.stopGame();
+    	super.onPause();
+    } 
+    
+    public void onRestart()
+    {
+    	mGame.restartGame();
+    	super.onRestart();
+    }
+    
 }

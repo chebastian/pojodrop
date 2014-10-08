@@ -22,7 +22,8 @@ public class PlayFragment extends Fragment {
 	
 	public void onDestroy()
 	{
-		mGameView.mThread.setRunnint(false);
+		///mGameView.mThread.setRunnint(false);
+		mGame.stopGame();
 		super.onDestroy();
 	}
 	
@@ -39,6 +40,7 @@ public class PlayFragment extends Fragment {
 	
 	public void onResume()
 	{
+		mGame.startGame(mGameView);
 		super.onResume();
 	} 
 }

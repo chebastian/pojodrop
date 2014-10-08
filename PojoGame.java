@@ -26,7 +26,7 @@ public class PojoGame {
 		mMessageManager = new GameMessageManager();
 		mView = view;
 		mTimeScale = 1.0f;
-		mPlayTime = 2.0f;
+		mPlayTime = 5.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
 		mFieldWidth = 6;
@@ -36,11 +36,14 @@ public class PojoGame {
 		mCurrentAccount = new PlayerAccount("ApplicationSebastian");
 		mRunning = false;
 		mView = null; 
+		mMainThread = null;
 	}
 	
 	public void startGame(GameView view)
 	{
 		mView = view;
+		resetActiveField();
+		changeState(new QuickPlayState(this)); 
 		if(mMainThread == null)
 		{
 			mMainThread = new MainGameThread(mView, this);
@@ -48,15 +51,18 @@ public class PojoGame {
 			mMainThread.execute("");
 		} 
 		else
+		{
 			mMainThread.setRunnint(true);
-		resetActiveField();
-		changeState(new QuickPlayState(this)); 
+			mMainThread.mIsPaused = false;
+			mMainThread.mGameView = mView;
+		}
+
 	}
 	
 	public void restartGame()
 	{
-		mView.mThread = null;
-		changeState(new QuickPlayState(this));
+		if(mMainThread != null)
+			changeState(new QuickPlayState(this));
 	}
 	
 	
@@ -147,5 +153,15 @@ public class PojoGame {
 	public PlayerAccount getPlayerAccount()
 	{
 		return mCurrentAccount;
+	}
+
+	public void stopGame() {
+		// TODO Auto-generated method stub
+
+		if(mMainThread != null)
+			mMainThread.pauseThread();
+
+		//mMainThread.setRunnint(false);
+		
 	}
 }

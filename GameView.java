@@ -48,7 +48,6 @@ public class GameView extends SurfaceView {
 		super(context);
 		mEntityManager = new EntityManager();
 		mGame = context.mGame;
-		mGame.startGame(this);
 
 		//mThread = new MainGameThread(this,mGame);
 		mEffectMgr = new EffectManager(this); 
@@ -76,9 +75,9 @@ public class GameView extends SurfaceView {
 			@Override
 			public void surfaceCreated(SurfaceHolder holder) {
 				// TODO Auto-generated method stub
-				mThread.setRunnint(true);
+				//mThread.setRunnint(true);
 				//mThread.start();
-				mThread.execute("");
+				//mThread.execute("");
 
 			}
 
@@ -90,8 +89,7 @@ public class GameView extends SurfaceView {
 		setFocusable(true);
 		
 		mTextWidth = 100;
-		setWillNotDraw(false);
-		
+		setWillNotDraw(false); 
 	}
 
 	public GameView(Context context, AttributeSet attrs) {
