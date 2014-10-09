@@ -32,7 +32,7 @@ public class QuickPlayState extends State implements GameMessageListener{
 		
 		mPlayTime = mGame.getPlayTime();
 		mGame.getScoreTracker().reset();
-		mTimeBar = new PlaytimeBar(0, new Point(300,100), 100, (int)mPlayTime);
+		mTimeBar = new PlaytimeBar(0, new Point(20,(PuzzleBlock.BLOCK_H*2)+(int)mGame.getActiveField().FieldHeightInPixels()), 100, (int)mPlayTime);
 		mGame.getView().entityManager().addEntity(mTimeBar);
 		mGame.MessageManager().addListener(this);
 
@@ -154,7 +154,7 @@ public class QuickPlayState extends State implements GameMessageListener{
 		// TODO Auto-generated method stub
 		Log.d(TAG, msg.toString());
 		if(msg.getEventType() == GameEvents.BLOCK_START_FADE)
-			mTimeBar.increaseTime(2.0f);
+			mTimeBar.increaseTime(2.0f*mGame.getScoreTracker().getComboCounter());
 		else if(msg.getEventType() == GameEvents.FIELD_OVERFLOW)
 			mGame.changeState(new PresentScoreState(mGame)); 
 	}

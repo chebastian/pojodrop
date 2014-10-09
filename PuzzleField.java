@@ -11,6 +11,7 @@ import java.util.Vector;
 import com.example.pojodrop.GameMessage.GameEvents;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -513,6 +514,7 @@ public class PuzzleField extends RenderableEntity {
 	
 	public void render(Canvas g)
 	{
+		renderBackground(g);
 		for(int i = 0; i < ActiveBlock.size(); i++)
 		{
 			PuzzleBlock b = ActiveBlock.get(i);
@@ -525,6 +527,23 @@ public class PuzzleField extends RenderableEntity {
 			{
 				BlockMap.get(i).get(j).render(g);
 			}
+		}
+	}
+	
+	public void renderBackground(Canvas g)
+	{
+		float top = FieldHeightInPixels() + (int)(PuzzleBlock.BLOCK_H*0.5);
+		Paint p = new Paint();
+		p.setColor(0xAAAAAAAA);
+		for(int i = 0; i < FIELD_WIDTH-1; i++)
+		{
+			float in = (i+1.0f)/FIELD_WIDTH;
+			float x = i * PuzzleBlock.BLOCK_W;
+			float w = PuzzleBlock.BLOCK_W;
+			float hdiff = (float) Math.cos(Math.PI * in) * PuzzleBlock.BLOCK_H;
+			hdiff = Math.abs(hdiff);
+			g.drawLine(x+w, 0, x+w, top, p);
+
 		}
 	}
 	

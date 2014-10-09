@@ -29,7 +29,7 @@ public class PojoGame {
 		mPlayTime = 15.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
-		mFieldWidth = 6;
+		mFieldWidth = 7;
 		mFieldHeight  = 13;
 		mLevel = 3; 
 		resetActiveField();
