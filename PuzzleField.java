@@ -111,6 +111,11 @@ public class PuzzleField extends RenderableEntity {
 		Point blockPos = new Point();
 		for(int i = 0; i < BlockMap.size(); i++)
 		{
+			int collumnHeight = BlockMap.get(i).size();
+			if(collumnHeight >= FIELD_HEIGHT)
+			{
+				mGame.MessageManager().addEvent(new GameMessage(GameEvents.FIELD_OVERFLOW));
+			}
 			for(int j = 0; j < BlockMap.get(i).size(); j++)
 			{
 				PuzzleBlock bl = GetBlock(i, j);
@@ -121,7 +126,7 @@ public class PuzzleField extends RenderableEntity {
 					blockPos = new Point(bl.getX(),bl.getY());
 					hasACombo = true;
 					blockCounter++;
-				}
+				} 
 			}
 		}
 		
@@ -131,7 +136,7 @@ public class PuzzleField extends RenderableEntity {
 			mGame.getScoreTracker().increaseComboCounter();
 			int combo = mGame.getScoreTracker().getComboCounter();
 			if(combo > 1){
-				mGame.getView().entityManager().addEntity(new BubbleText(""+combo + " COMBO!", new Point(0,200), new Point(blockPos.x,0), 2.0f));
+				mGame.getView().entityManager().addEntity(new BubbleText(""+combo + " *!", new Point(blockPos.x,200), new Point(blockPos.x,210), 2.0f));
 			}
 			int score = mGame.getScoreTracker().increaseScore(blockCounter);
 			mGame.getView().entityManager().addEntity(new BubbleText("+" + score, blockPos, new Point(blockPos.x,0), 1.5f));

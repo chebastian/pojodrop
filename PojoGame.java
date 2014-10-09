@@ -26,7 +26,7 @@ public class PojoGame {
 		mMessageManager = new GameMessageManager();
 		mView = view;
 		mTimeScale = 1.0f;
-		mPlayTime = 5.0f;
+		mPlayTime = 15.0f;
 		mScoreTracker = new ScoreTracker(this);
 		mCanvasScaleValue = 1.0f;
 		mFieldWidth = 6;

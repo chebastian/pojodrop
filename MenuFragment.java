@@ -9,6 +9,7 @@ import android.app.AlertDialog.Builder;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class MenuFragment extends Fragment {
 	AlertDialog.Builder mInputNameDialog;
 	PojoGame mGame;
 	PlayerAccountSerializer mAccountSerializer;
+	Context mContext;
 
 	public MenuFragment(PojoGame game) {
 		// TODO Auto-generated constructor stub
@@ -45,6 +47,7 @@ public class MenuFragment extends Fragment {
 	{
 		View v = inflater.inflate(R.layout.activity_game_menu, parent, false);
 		mAccountSerializer = new PlayerAccountSerializer(v.getContext(), mGame.getPlayerAccount(), PlayerAccountSerializer.ACCOUNT_JSON_PATH);
+		mContext = v.getContext();
 
 		mStartGameButton = (Button)v.findViewById(R.id.startGameButton);
 		
@@ -133,6 +136,12 @@ public class MenuFragment extends Fragment {
 				
 			}
 		});
+
+		File file = new File(mContext.getFilesDir(),PlayerAccountSerializer.ACCOUNT_JSON_PATH);
+		if(!file.exists())
+		{
+			mInputNameDialog.show();
+		}
 		
 	}
 	

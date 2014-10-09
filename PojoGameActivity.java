@@ -108,13 +108,16 @@ public class PojoGameActivity extends Activity {
     
     public void onPause()
     {
-    	mGame.stopGame();
+    	if(mGame != null)
+            mGame.stopGame();
+
     	super.onPause();
     } 
     
     public void onRestart()
     {
-    	mGame.restartGame();
+    	if(mGame != null)
+            mGame.restartGame();
     	super.onRestart();
     }
     

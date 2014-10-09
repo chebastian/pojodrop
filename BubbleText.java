@@ -43,7 +43,7 @@ public class BubbleText extends SimpleParticle {
 	public void render(Canvas g)
 	{ 
 		mPaint.setTypeface(Typeface.DEFAULT_BOLD);
-		mPaint.setTextSize((1.0f - (mElapsedTime / mDuration)) * mBaseSize);
+		mPaint.setTextSize((1.0f + (mElapsedTime / mDuration)) * mBaseSize);
 		mPaint.setAlpha((int) (255 * (1.0 - mElapsedTime / mDuration)));
 		g.drawText(mMessage, getX(), getY(), mPaint);
 	}

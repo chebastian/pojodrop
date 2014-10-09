@@ -19,6 +19,7 @@ public class DroppState extends BlockState {
 		mStepsToFall = steps;
 		mStartingPosY = block.getY();
 		StateID = DroppStateID;
+		
 		mFallSpeedChanger = 2.5f;
 		mFallSpeed = 1.0f;
 	}
@@ -37,6 +38,13 @@ public class DroppState extends BlockState {
 			Block.ChangeState(new IdleState(Block));
 		}
 
+	}
+	
+	public float bounceTo(float origin, float to, float speed, float bouyancy)
+	{
+		float res = 0.0f;
+		
+		return res;
 	}
 	
 	public void onExit()

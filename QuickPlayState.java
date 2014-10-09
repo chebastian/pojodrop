@@ -155,6 +155,8 @@ public class QuickPlayState extends State implements GameMessageListener{
 		Log.d(TAG, msg.toString());
 		if(msg.getEventType() == GameEvents.BLOCK_START_FADE)
 			mTimeBar.increaseTime(2.0f);
+		else if(msg.getEventType() == GameEvents.FIELD_OVERFLOW)
+			mGame.changeState(new PresentScoreState(mGame)); 
 	}
 
 }

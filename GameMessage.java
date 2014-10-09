@@ -12,7 +12,8 @@ public class GameMessage {
 		BLOCK_DONE_FADE("BLOCK DONE FADE"),
 		COMBO_ACTIVATED("COMBO START"),
 		FIELD_CLEARED("FIELD CLEARED"),
-		COMBO_DONE("COMBO DONE");
+		COMBO_DONE("COMBO DONE"),
+		FIELD_OVERFLOW("FIELD OVERFLOW");
 
         private final String mName;
         GameEvents(String name)
