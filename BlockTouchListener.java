@@ -79,8 +79,8 @@ public class BlockTouchListener implements OnTouchListener {
 			float d = mOriginX - newX;
 			
 			int w = mView.getWidth();
-			int wstep = w / 6;
-			
+			int wstep = w / 10;
+
 			if(Math.abs(d) > wstep)
 			{
 				if(d < 0)
@@ -90,8 +90,18 @@ public class BlockTouchListener implements OnTouchListener {
 				
 				mOriginX = newX;
 			}
+			else
+			{
+				onStartDragX(d/wstep);
+			}
 	}
 	
+	public void onStartDragX(float d)
+	{
+		
+	}
+	
+
 	protected void handleYMovement(MotionEvent event)
 	{
 			float newY = event.getY();

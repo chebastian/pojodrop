@@ -16,7 +16,9 @@ public class BlockQueue {
 	int mNumTypes;
 	Paint mPaint;
 	Random mRand;
+	int mSize;
 	int mPreviewLength;
+	int mCurrentBlock;
 
 	public BlockQueue(int numTypes) {
 		// TODO Auto-generated constructor stub
@@ -26,11 +28,13 @@ public class BlockQueue {
 		mPaint.setColor(Color.WHITE);
 		mPaint.setTextSize(15.0f);
 		mRand = new Random();
-		mPreviewLength = 4;
+		mPreviewLength = 2;
+		mCurrentBlock = 0;
 	} 
 	
 	public void createRandomQueue(int queueSize)
 	{
+		mSize = queueSize;
 		for(int i = 0; i < queueSize; i++){
 			addNewBlock();
 		}
@@ -47,7 +51,14 @@ public class BlockQueue {
 	
 	public PuzzleBlock getNext()
 	{
-		return popBlock();
+		mCurrentBlock++;
+		if(mCurrentBlock >= mBlocks.size())
+		{
+			mCurrentBlock = 0;
+		} 
+		
+		return mBlocks.get(mCurrentBlock);
+		//return popBlock();
 	}
 	
 	public PuzzleBlock popBlock()
@@ -55,8 +66,11 @@ public class BlockQueue {
 		PuzzleBlock block = new PuzzleBlock();
 		
 		try{
-			block = mBlocks.get(mBlocks.size()-1);
-			mBlocks.remove(mBlocks.size()-1);
+			if(mBlocks.size() > mPreviewLength)
+			{
+				block = mBlocks.get(mBlocks.size()-1);
+				mBlocks.remove(mBlocks.size()-1); 
+			}
 		}
 		catch(Exception e){
 			Log.d("","Tried to get a block that does not exist");
@@ -72,13 +86,26 @@ public class BlockQueue {
 		Point renderPos = new Point(pos.x,pos.y);
 		g.drawText("Next: ", pos.x, pos.y + textMarginBottom, mPaint);
 		
-		for(int i = mBlocks.size()-1; i >= mBlocks.size()-mPreviewLength; i--)
-		{
+		/*for(int i = mBlocks.size()-1; i >= mBlocks.size()-mPreviewLength; i--)
+		{ 
 			renderPos.y += PuzzleBlock.BLOCK_H; 
 			PuzzleBlock block = mBlocks.get(i);
 			block.SetPosition(renderPos.x, renderPos.y);
 			block.render(g); 
 			renderPos.y += blockMargin;
+			if(i % 2 == 0)
+				renderPos.y += blockMargin*2;
+		}*/
+		
+		for(int i = 0; i < mPreviewLength; i++)
+		{
+			int index = ((1+mCurrentBlock) + i)%mBlocks.size();
+			renderPos.y += PuzzleBlock.BLOCK_H; 
+			PuzzleBlock block = mBlocks.get(index);
+			block.SetPosition(renderPos.x, renderPos.y);
+			block.render(g); 
+			renderPos.y += blockMargin;
+
 			if(i % 2 == 0)
 				renderPos.y += blockMargin*2;
 		}

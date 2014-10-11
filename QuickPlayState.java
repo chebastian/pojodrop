@@ -32,7 +32,7 @@ public class QuickPlayState extends State implements GameMessageListener{
 		
 		mPlayTime = mGame.getPlayTime();
 		mGame.getScoreTracker().reset();
-		mTimeBar = new PlaytimeBar(0, new Point(20,(PuzzleBlock.BLOCK_H*2)+(int)mGame.getActiveField().FieldHeightInPixels()), 100, (int)mPlayTime);
+		mTimeBar = new PlaytimeBar(PojoGame.TIMEBAR_ID, new Point(20,(PuzzleBlock.BLOCK_H*2)+(int)mGame.getActiveField().FieldHeightInPixels()), 100, (int)mPlayTime);
 		mGame.getView().entityManager().addEntity(mTimeBar);
 		mGame.MessageManager().addListener(this);
 
@@ -79,6 +79,16 @@ public class QuickPlayState extends State implements GameMessageListener{
 				}
 				
 			}
+			
+			public void onDragging(float d)
+			{
+				/*	int dir = 1;
+				if(d > 0)
+					dir *= -1;
+
+				if(mGame.getActiveField().CanMoveActiveBlockInDirection(dir))
+					mGame.getActiveField().setTempRenderPos(-d);*/
+			}
 		}); 
 		
 		
@@ -122,11 +132,11 @@ public class QuickPlayState extends State implements GameMessageListener{
 	{
 		mGame.getActiveField().render(g);
 	//	renderCountDown(g);
-		mGame.getActiveField().getQueue().renderAt(g, new Point(164,0));
+		mGame.getActiveField().getQueue().renderAt(g, new Point((int) mGame.getActiveField().FieldWidthInPixels(),(int)PuzzleBlock.BLOCK_W));
 		Paint p = new Paint();
 		p.setTextSize(20.0f);
 		p.setColor(Color.WHITE);
-		g.drawText("Score: " + mGame.getScoreTracker().getScore(), 300, 80, p);
+		g.drawText("Score: " + mGame.getScoreTracker().getScore(), mGame.getActiveField().FieldWidthInPixels(), 80, p);
 	}
 	
 	public void renderCountDown(Canvas g)

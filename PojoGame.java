@@ -3,6 +3,7 @@ package com.example.pojodrop;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 public class PojoGame {
 
@@ -20,6 +21,10 @@ public class PojoGame {
 	GameMessageManager mMessageManager;
 	MainGameThread mMainThread;
 	boolean mRunning;
+	Point mTimerPosition;
+	
+	
+	public static final int TIMEBAR_ID = 55;
 
 	public PojoGame(GameView view) {
 		// TODO Auto-generated constructor stub
@@ -37,6 +42,7 @@ public class PojoGame {
 		mRunning = false;
 		mView = null; 
 		mMainThread = null;
+		mTimerPosition = null;
 	}
 	
 	public void startGame(GameView view)
@@ -55,8 +61,7 @@ public class PojoGame {
 			mMainThread.setRunnint(true);
 			mMainThread.mIsPaused = false;
 			mMainThread.mGameView = mView;
-		}
-
+		} 
 	}
 	
 	public void restartGame()

@@ -33,7 +33,17 @@ public class SwipeListener implements OnTouchListener{
 			{
 				onSwipeUp();
 			}
+			
+			public void onStartDragX(float d)
+			{
+				onDragging(d);
+			}
 		};
+	}
+	
+	public void onDragging(float d)
+	{
+		
 	}
 
 	public void onSwipeLeft()

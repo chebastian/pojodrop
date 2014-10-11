@@ -138,6 +138,25 @@ public class PuzzleBlock extends RenderableEntity{
 	}
 	
 	public void renderAt(Canvas g, Point pos){
+		int x = pos.x;
+		int y = pos.y;
+		if(!Alive)
+			mPaint.setColor(Color.BLACK);
+		
+		int drawX = x + (int)((BLOCK_W-2)*1.0f-Scale);
+		int drawY = y + (int)((BLOCK_H-2)*1.0-Scale); 
+		
+		mPaint.setAntiAlias(true);
+		mPaint.setColor(Colour);
+		mPaint.setStyle(Paint.Style.FILL);
+//		g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);
+		g.drawCircle(drawX, drawY, Scale*(int)(BLOCK_W*0.5), mPaint);
+		
+		//mPaint.setColor((int)(Colour - Colour*0.1));
+		//mPaint.setStyle(Paint.Style.STROKE);
+		//mPaint.setStrokeWidth(2+(2*num));
+		//g.drawRect(drawX, drawY, drawX+(int)((BLOCK_W-2)*Scale), drawY+(int)((BLOCK_H-2)*Scale),mPaint);*/
+		CurrentState.render(g);
 		
 	}
 	

@@ -10,10 +10,12 @@ import java.util.Vector;
 
 import com.example.pojodrop.GameMessage.GameEvents;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.BlurMaskFilter.Blur;
 
 public class PuzzleField extends RenderableEntity {
 	
@@ -35,6 +37,8 @@ public class PuzzleField extends RenderableEntity {
 	
 	boolean mNeedToUpdate;
 	boolean mBlocksWereFaded;
+
+	private float mTempRenderPos;
 	
 	public PuzzleField(int w, int h)
 	{
@@ -59,6 +63,7 @@ public class PuzzleField extends RenderableEntity {
 		mField = new BlockField(w, h);
 		mNeedToUpdate = false;
 		mBlocksWereFaded = false;
+		mTempRenderPos = 0.0f;
 	}
 	
 	public void init(PojoGame game)
@@ -123,7 +128,11 @@ public class PuzzleField extends RenderableEntity {
 				bl.update(time); 
 				if(updateFade && bl.needsToFade() && !bl.IsInState(FadingState.FadingStateID))
 				{ 
-					bl.ChangeState(new FadingState(bl)); 
+					int x = mGame.getView().entityManager().getEntityById(PojoGame.TIMEBAR_ID).getX();
+					int y = mGame.getView().entityManager().getEntityById(PojoGame.TIMEBAR_ID).getY();
+
+					Point p = mGame.getView().entityManager().getEntityById(PojoGame.TIMEBAR_ID).getCenter();
+					bl.ChangeState(new FadingState(bl, p)); 
 					blockPos = new Point(bl.getX(),bl.getY());
 					hasACombo = true;
 					blockCounter++;
@@ -174,6 +183,8 @@ public class PuzzleField extends RenderableEntity {
 			for(int j = 0; j < BlockMap.get(i).size(); j++)
 			{
 				PuzzleBlock block = BlockMap.get(i).get(j);
+				if(block.needsToFade())
+					continue;
 
 				//block.update(time);
 
@@ -518,7 +529,8 @@ public class PuzzleField extends RenderableEntity {
 		for(int i = 0; i < ActiveBlock.size(); i++)
 		{
 			PuzzleBlock b = ActiveBlock.get(i);
-			b.render(g);
+			//b.render(g);
+			b.renderAt(g, new Point(b.getX() + (int)( (float)PuzzleBlock.BLOCK_W*mTempRenderPos), b.getY()));
 		}
 		
 		for( int i = 0; i < BlockMap.size(); i++)
@@ -535,6 +547,8 @@ public class PuzzleField extends RenderableEntity {
 		float top = FieldHeightInPixels() + (int)(PuzzleBlock.BLOCK_H*0.5);
 		Paint p = new Paint();
 		p.setColor(0xAAAAAAAA);
+		p.setStrokeWidth(1.5f);
+
 		for(int i = 0; i < FIELD_WIDTH-1; i++)
 		{
 			float in = (i+1.0f)/FIELD_WIDTH;
@@ -542,9 +556,23 @@ public class PuzzleField extends RenderableEntity {
 			float w = PuzzleBlock.BLOCK_W;
 			float hdiff = (float) Math.cos(Math.PI * in) * PuzzleBlock.BLOCK_H;
 			hdiff = Math.abs(hdiff);
+			int color = 0;
+			if(BlockMap.get(i).size() > 0)
+			{
+                p.setColor(GetBlock(i, BlockMap.get(i).size()-1).Colour); 
+                p.setAlpha(125);
+			}
+			else
+				p.setColor(0xAAAAAAAA);
+			
 			g.drawLine(x+w, 0, x+w, top, p);
 
 		}
+	}
+	
+	public void setTempRenderPos(float x)
+	{
+		mTempRenderPos = x;
 	}
 	
 	public void MoveActiveBlock(float xdist, float ydist)
@@ -752,6 +780,11 @@ public class PuzzleField extends RenderableEntity {
 	public float FieldHeightInPixels()
 	{
 		return FIELD_HEIGHT * PuzzleBlock.BLOCK_H;
+	}
+	
+	public float FieldWidthInPixels()
+	{
+		return (FIELD_WIDTH) * PuzzleBlock.BLOCK_W;
 	}
 	
 	public int getLastClusterSize()

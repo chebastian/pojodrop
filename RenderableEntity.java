@@ -2,6 +2,7 @@ package com.example.pojodrop;
 
 import android.graphics.Canvas;
 import android.graphics.Point;
+import android.graphics.PointF;
 import android.graphics.Rect;
 
 
@@ -15,7 +16,7 @@ public class RenderableEntity extends Entity implements Comparable<RenderableEnt
 		super(id);
 		rect = r;
 		mAlive = true;
-		mLayerZ = 0;
+		mLayerZ = 0; 
 	}
 	
 	public void Move(float x, float y)
@@ -68,6 +69,39 @@ public class RenderableEntity extends Entity implements Comparable<RenderableEnt
 		Point result = new Point();
 		
 		return result;
+	}
+	
+	public void moveTowards(Point origin, Point pos, float speed)
+	{
+		Point dir = new Point( pos.x - origin.x, pos.y - origin.y); 
+		
+		PointF normalDir = new PointF();
+		float len = (float) Math.sqrt((dir.x * dir.x) + (dir.y * dir.y));
+		normalDir.x = dir.x / len; 
+		normalDir.y = dir.y / len; 
+		float sp = 200.0f;
+		rect.left += (normalDir.x) * (speed*sp);
+		rect.top += (normalDir.y) * (speed*sp);
+	}
+	
+	public boolean isWithinRange(Point p, float range)
+	{
+		float dist = distanceTo(p);
+		return dist < range;
+	}
+	
+	public float distanceTo(Point p)
+	{ 
+		Point pos = new Point(rect.left, rect.top); 
+		Point dir = new Point( p.x - pos.x, p.y - pos.y ); 
+		
+		float len = (float) Math.sqrt((dir.x * dir.x) + (dir.y * dir.y));
+		return len;
+	}
+	
+	public Point getCenter()
+	{
+		return new Point(rect.left + (rect.width()/2), rect.top +( rect.height()/2));
 	}
 
 	@Override

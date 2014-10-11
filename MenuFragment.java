@@ -153,6 +153,10 @@ public class MenuFragment extends Fragment {
 	
 	protected void loadUserAccount()
 	{
+		File file = new File(mContext.getFilesDir(),PlayerAccountSerializer.ACCOUNT_JSON_PATH);
+		if(!file.exists())
+			return;
+		
 		PlayerAccount account = new PlayerAccount("");
 		PlayerAccountSerializer serializer = new PlayerAccountSerializer(this.getView().getContext(),account, PlayerAccountSerializer.ACCOUNT_JSON_PATH);
 		try 

@@ -15,6 +15,19 @@ public class EntityManager {
 		mEntitys = new ArrayList<RenderableEntity>(); 
 	}
 	
+	public RenderableEntity getEntityById(int ID)
+	{
+		for(RenderableEntity ent : mEntitys)
+		{
+			if(ent.entityID() == ID)
+			{
+				return ent;
+			}
+		}
+		
+		return null;
+	}
+	
 	public void addEntity(RenderableEntity ent){
 		mEntitys.add(ent);
 		mNeedsToUpdate = true;

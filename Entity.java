@@ -16,6 +16,11 @@ public class Entity {
 		
 	}
 	
+	public int entityID()
+	{
+		return EntityID;
+	}
+	
 	public void Kill()
 	{
 		Alive = false;

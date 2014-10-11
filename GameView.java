@@ -125,6 +125,7 @@ public class GameView extends SurfaceView {
 		
 		mEffectMgr.renderEffects(canvas);
 		canvas.scale(sz, sz);
+		//canvas.translate(canvas.getWidth()*0.5f, 0.0f);
 	}
 	
 	public float getScaleValue(Canvas canvas)
